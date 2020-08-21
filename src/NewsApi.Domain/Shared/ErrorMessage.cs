@@ -8,7 +8,7 @@ namespace NewsApi.Domain.Shared
             Message = message;
         }
 
-        string Code { get; }
-        string Message { get; }
+        public string Code { get; }
+        public string Message { get; }
     }
 }
