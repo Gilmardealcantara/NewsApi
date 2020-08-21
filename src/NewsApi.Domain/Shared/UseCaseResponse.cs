@@ -25,6 +25,6 @@ namespace NewsApi.Domain.Shared
             => this.SetErrors(errors.Select(x => new ErrorMessage(x.ErrorCode, x.ErrorMessage)));
 
         public bool Success()
-            => Result != null && Errors != null && Errors.Count() > 0;
+            => Result != null && (Errors == null || Errors.Count() <= 0);
     }
 }

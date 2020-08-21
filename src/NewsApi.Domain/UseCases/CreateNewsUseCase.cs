@@ -31,7 +31,7 @@ namespace NewsApi.Domain.UseCases
             try
             {
                 var validate = _validator.Validate(request);
-                if (validate.IsValid)
+                if (!validate.IsValid)
                     return response.SetRequestValidatorError(validate.Errors);
 
                 var news = request.ToNews();
