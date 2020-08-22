@@ -9,41 +9,22 @@ using Microsoft.Extensions.Logging;
 
 namespace NewsApi.Domain.UseCases
 {
-    public class CreateNewsUseCase : IUseCase<CreateNewsRequest, News>
+    public class CreateNewsUseCase : UseCaseBase<CreateNewsRequest, News>
     {
-        ILogger<CreateNewsUseCase> _logger;
-        IValidator<CreateNewsRequest> _validator;
         INewsRepository _repository;
-
         public CreateNewsUseCase(
             ILogger<CreateNewsUseCase> logger,
             IValidator<CreateNewsRequest> validator,
-            INewsRepository repository)
+            INewsRepository repository) : base(logger, validator, ("01", "Error unexpected when create news"))
         {
-            _logger = logger;
-            _validator = validator;
             _repository = repository;
         }
 
-        public async Task<UseCaseResponse<News>> Execute(CreateNewsRequest request)
+        protected override async Task<UseCaseResponse<News>> OnExecute(CreateNewsRequest request)
         {
-            var response = new UseCaseResponse<News>();
-            try
-            {
-                var validate = _validator.Validate(request);
-                if (!validate.IsValid)
-                    return response.SetRequestValidatorError(validate.Errors);
-
-                var news = request.ToNews();
-                await _repository.Save(news);
-                return response.SetResult(news);
-            }
-            catch (Exception e)
-            {
-                var errorMsg = new ErrorMessage("01", "Error unexpected when create news");
-                _logger.LogError(e, errorMsg.Message);
-                return response.SetGenericError(new ErrorMessage[] { errorMsg });
-            }
+            var news = request.ToNews();
+            await _repository.Save(news);
+            return _response.SetResult(news);
         }
     }
 }
