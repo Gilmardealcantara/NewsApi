@@ -10,5 +10,11 @@ namespace NewsApi.Domain.Entities
            => Title = title;
 
         public string Title { get; }
+        public string Content { get; private set; }
+
+        public void SetContent(string content)
+        {
+            this.Content = content;
+        }
     }
 }

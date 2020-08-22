@@ -10,6 +10,7 @@ using NewsApi.Domain.Entities;
 using NewsApi.Domain.Services.Repositories;
 using NewsApi.Domain.UseCases;
 using Xunit;
+using Bogus;
 
 namespace NewsApi.Domain.Tests.UseCases
 {
@@ -19,12 +20,16 @@ namespace NewsApi.Domain.Tests.UseCases
         public async Task UseCase_WhenOk_ReturnSuccess()
         {
             //Given
-            var request = new CreateNewsRequest { Title = "My News" };
+            var request = new Faker<CreateNewsRequest>()
+                .RuleFor(x => x.Title, f => f.Lorem.Sentence(3))
+                .RuleFor(x => x.Content, f => f.Lorem.Paragraphs())
+                .Generate();
+
             var logger = new Mock<ILogger<CreateNewsUseCase>>().Object;
 
             var validatorMock = new Mock<IValidator<CreateNewsRequest>>();
             validatorMock.Setup(v => v.ValidateAsync(request, It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new ValidationResult());
+                .ReturnsAsync(new FluentValidation.Results.ValidationResult());
 
             var repositoryMock = new Mock<INewsRepository>();
             repositoryMock.Setup(r => r.Save(It.IsAny<News>()));
@@ -35,8 +40,9 @@ namespace NewsApi.Domain.Tests.UseCases
 
             //Then
             response.Success().Should().BeTrue();
-            response.Result?.Title.Should().Be("My News");
-            response.Result?.Id.Should().NotBeEmpty();
+            response.Result.Title.Should().Be(request.Title);
+            response.Result.Content.Should().Be(request.Content);
+            response.Result.Id.Should().NotBeEmpty();
             repositoryMock.Verify(r => r.Save(It.IsAny<News>()), Times.Once);
         }
     }
