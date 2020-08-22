@@ -1,9 +1,9 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
-using Microsoft.Extensions.Logging;
 using Moq;
 using NewsApi.Domain.Dtos;
 using NewsApi.Domain.Entities;
@@ -37,6 +37,7 @@ namespace NewsApi.Domain.Tests.UseCases
             response.Success().Should().BeTrue();
             response.Result?.Title.Should().Be("My News");
             response.Result?.Id.Should().NotBeEmpty();
+            repositoryMock.Verify(r => r.Save(It.IsAny<News>()), Times.Once);
         }
     }
 }

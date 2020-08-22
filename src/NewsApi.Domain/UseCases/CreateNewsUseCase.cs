@@ -1,11 +1,10 @@
-using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using FluentValidation;
 using NewsApi.Domain.Dtos;
 using NewsApi.Domain.Entities;
-using NewsApi.Domain.Shared;
-using FluentValidation;
 using NewsApi.Domain.Services.Repositories;
-using Microsoft.Extensions.Logging;
+using NewsApi.Domain.Shared;
 
 namespace NewsApi.Domain.UseCases
 {
