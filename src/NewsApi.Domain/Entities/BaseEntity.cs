@@ -4,11 +4,10 @@ namespace NewsApi.Domain.Entities
 {
     public abstract class BaseEntity
     {
-        protected BaseEntity()
-        {
-            Id = Guid.NewGuid();
-            RegistrationAt = DateTime.Now;
-        }
+        protected BaseEntity() =>
+            (Id, RegistrationAt) = (Guid.NewGuid(), DateTime.Now);
+        protected BaseEntity(Guid id) =>
+            (Id, RegistrationAt) = (id, DateTime.Now);
 
         public virtual Guid Id { get; set; }
         public virtual DateTime RegistrationAt { get; private set; }
