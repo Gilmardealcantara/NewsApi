@@ -42,7 +42,7 @@ namespace NewsApi.Domain.UseCases
             {
                 var errorMsg = new ErrorMessage("01", "Error unexpected when create news");
                 _logger.LogError(e, errorMsg.Message);
-                return response.SetErrors(new ErrorMessage[] { errorMsg });
+                return response.SetGenericError(new ErrorMessage[] { errorMsg });
             }
         }
     }
