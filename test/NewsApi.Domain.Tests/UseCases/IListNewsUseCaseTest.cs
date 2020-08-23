@@ -8,7 +8,6 @@ using NewsApi.Domain.Entities;
 using NewsApi.Domain.Services.Repositories;
 using NewsApi.Domain.Shared;
 using NewsApi.Domain.UseCases;
-using Newtonsoft.Json;
 using Xunit;
 
 namespace NewsApi.Domain.Tests.UseCases

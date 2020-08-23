@@ -7,7 +7,7 @@ namespace NewsApi.Domain.Shared
     public class UseCaseResponse<T>
     {
         public T Result { get; private set; }
-        public IEnumerable<ErrorMessage>? Errors { get; private set; }
+        public IEnumerable<ErrorMessage> Errors { get; private set; }
         public UseCaseResponseStatus Status { get; private set; }
 
         public UseCaseResponse<T> SetResult(T result)
@@ -25,7 +25,7 @@ namespace NewsApi.Domain.Shared
 
         public UseCaseResponse<T> SetGenericError(IEnumerable<ErrorMessage> errors)
         {
-            this.Status = UseCaseResponseStatus.GenericExceptionError;
+            this.Status = UseCaseResponseStatus.ExceptionError;
             return this.SetErrors(errors);
         }
 

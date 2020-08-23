@@ -12,7 +12,7 @@ namespace NewsApi.Domain.Entities
         public virtual Guid Id { get; set; }
         public virtual DateTime RegistrationAt { get; private set; }
 
-        public override bool Equals(object? obj)
+        public override bool Equals(object obj)
         {
             var compareTo = obj as BaseEntity;
 

@@ -1,9 +1,6 @@
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using FluentAssertions;
-using FluentValidation;
-using FluentValidation.Results;
 using Moq;
 using NewsApi.Domain.Dtos;
 using NewsApi.Domain.Entities;
@@ -11,6 +8,7 @@ using NewsApi.Domain.Services.Repositories;
 using NewsApi.Domain.UseCases;
 using Xunit;
 using Bogus;
+using NewsApi.Domain.Tests.Validadors;
 
 namespace NewsApi.Domain.Tests.UseCases
 {
@@ -26,16 +24,13 @@ namespace NewsApi.Domain.Tests.UseCases
                 .Generate();
 
             var logger = new Mock<ILogger<CreateNewsUseCase>>().Object;
-
-            var validatorMock = new Mock<IValidator<CreateNewsRequest>>();
-            validatorMock.Setup(v => v.ValidateAsync(request, It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new FluentValidation.Results.ValidationResult());
+            var validator = ValidatorsFactory.GetValidValidator<CreateNewsRequest>();
 
             var repositoryMock = new Mock<INewsRepository>();
             repositoryMock.Setup(r => r.Save(It.IsAny<News>()));
 
             //When
-            var useCase = new CreateNewsUseCase(logger, validatorMock.Object, repositoryMock.Object);
+            var useCase = new CreateNewsUseCase(logger, validator, repositoryMock.Object);
             var response = await useCase.Execute(request);
 
             //Then

@@ -1,13 +1,12 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using FluentAssertions;
 using FluentValidation;
-using FluentValidation.Results;
 using Moq;
 using NewsApi.Domain.Shared;
 using Xunit;
+using NewsApi.Domain.Tests.Validadors;
 
 namespace NewsApi.Domain.Tests.UseCases
 {
@@ -17,13 +16,9 @@ namespace NewsApi.Domain.Tests.UseCases
         public async Task UseCaseBase_WhenRequestIsInvalid_ReturnValidateError()
         {
             var logger = new Mock<ILogger<SpecificUseCase>>().Object;
-            var validatorMock = new Mock<IValidator<int>>();
-            validatorMock.Setup(v => v.ValidateAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(new ValidationResult(new ValidationFailure[] {
-                    new ValidationFailure("mockPropName", "mockMessage") {ErrorCode = "mockCode"}
-                }));
+            var validator = ValidatorsFactory.GetInValidValidator<int>("mockCode");
 
-            var useCase = new SpecificUseCase(logger, validatorMock.Object);
+            var useCase = new SpecificUseCase(logger, validator);
             var response = await useCase.Execute(5);
 
             response.Status.Should().Be(UseCaseResponseStatus.ValidateError);
@@ -38,16 +33,14 @@ namespace NewsApi.Domain.Tests.UseCases
         {
             //Given
             var logger = new Mock<ILogger<SpecificUseCase>>().Object;
-
-            var validatorMock = new Mock<IValidator<int>>();
-            validatorMock.Setup(v => v.Validate(It.IsAny<int>())).Returns(new ValidationResult());
+            var validator = ValidatorsFactory.GetValidValidator<int>();
 
             //When
-            var useCase = new SpecificUseCase(logger, validatorMock.Object);
+            var useCase = new SpecificUseCase(logger, validator);
             var response = await useCase.Execute(0);
 
             //Then
-            response.Status.Should().Be(UseCaseResponseStatus.GenericExceptionError);
+            response.Status.Should().Be(UseCaseResponseStatus.ExceptionError);
             response.Success().Should().BeFalse();
             response.Errors
                 .Should().NotBeNullOrEmpty()
@@ -65,7 +58,7 @@ namespace NewsApi.Domain.Tests.UseCases
             var response = await useCase.Execute();
 
             //Then
-            response.Status.Should().Be(UseCaseResponseStatus.GenericExceptionError);
+            response.Status.Should().Be(UseCaseResponseStatus.ExceptionError);
             response.Success().Should().BeFalse();
             response.Errors
                 .Should().NotBeNullOrEmpty()

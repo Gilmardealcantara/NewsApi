@@ -4,6 +4,6 @@ namespace NewsApi.Domain.Shared
     {
         Success = 1,
         ValidateError,
-        GenericExceptionError,
+        ExceptionError,
     }
 }
