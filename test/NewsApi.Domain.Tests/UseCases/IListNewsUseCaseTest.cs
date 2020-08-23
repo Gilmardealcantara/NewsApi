@@ -20,12 +20,15 @@ namespace NewsApi.Domain.Tests.UseCases
         [InlineData(101)]
         public async Task UseCase_WhenOk_ReturnListOfNews(int contentSize)
         {
-            int contentPreviewSizeLimit = 100;
             //Given
+            int contentPreviewSizeLimit = 100;
             var newsList = new Faker<News>()
-                .CustomInstantiator(f => new News(f.Lorem.Sentence(3)))
-                .RuleFor(x => x.Content, f => f.Lorem.Letter(contentSize))
-                .Generate(10);
+                .CustomInstantiator(f => new News(
+                    Guid.NewGuid(),
+                    f.Lorem.Sentence(3),
+                    f.Lorem.Letter(contentSize),
+                    new Author(f.Person.UserName)
+                )).Generate(10);
 
             var logger = new Mock<ILogger<ListNewsUseCase>>().Object;
             var repositoryMock = new Mock<INewsRepository>();

@@ -16,13 +16,15 @@ namespace NewsApi.Domain.Tests.UseCases
     public class GetNewsByIdUseCaseTest
     {
         [Fact]
-        public async Task UseCase_WhenOk_ResultSuccess()
+        public async Task UseCase_WhenOk_ResultNewsWithIdTitleAndContent()
         {
             var fakeNews = new Faker<News>()
-                .CustomInstantiator(f => new News(f.Lorem.Sentence(3)))
-                .RuleFor(x => x.Id, f => Guid.NewGuid())
-                .RuleFor(x => x.Content, f => f.Lorem.Paragraphs(3))
-                .Generate();
+                .CustomInstantiator(f => new News(
+                    Guid.NewGuid(),
+                    f.Lorem.Sentence(3),
+                    f.Lorem.Paragraphs(3),
+                    new Author(f.Person.UserName)
+                )).Generate();
 
             var logger = new Mock<ILogger<GetNewsByIdUseCase>>().Object;
             var validator = ValidatorsFactory.GetValidValidator<Guid>();
@@ -39,7 +41,8 @@ namespace NewsApi.Domain.Tests.UseCases
             response.Result.Title.Should().Be(fakeNews.Title);
             response.Result.Content.Should().Be(fakeNews.Content);
             repositoryMock.Verify(r => r.GetById(fakeNews.Id), Times.Once);
-
         }
+
+
     }
 }

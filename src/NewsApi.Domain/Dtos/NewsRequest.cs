@@ -7,12 +7,8 @@ namespace NewsApi.Domain.Dtos
     {
         public string Title { get; set; }
         public string Content { get; set; }
-        public News ToNews()
-        {
-            var news = new News(Title);
-            news.SetContent(Content);
-            return news;
-        }
+        public Author Author { get; set; }
+        public News ToNews() => new News(Title, Content, Author);
     }
 
     public class UpdateNewsRequest
@@ -20,11 +16,7 @@ namespace NewsApi.Domain.Dtos
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public News ToNews()
-        {
-            var news = new News(this.Id, Title);
-            news.SetContent(Content);
-            return news;
-        }
+        public Author Author { get; set; }
+        public News ToNews() => new News(this.Id, Title, Content, Author);
     }
 }
