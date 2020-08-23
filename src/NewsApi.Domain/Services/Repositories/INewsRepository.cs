@@ -12,5 +12,7 @@ namespace NewsApi.Domain.Services.Repositories
         Task<IEnumerable<News>> GetAll();
         Task<News> GetById(Guid id);
         Task Delete(News news);
+        Task<IEnumerable<Comment>> GetComments(Guid id);
+
     }
 }

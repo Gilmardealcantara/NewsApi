@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace NewsApi.Domain.Entities
 {
@@ -12,5 +13,6 @@ namespace NewsApi.Domain.Entities
         public string Title { get; }
         public string Content { get; }
         public Author Author { get; }
+        public IEnumerable<Comment> Comments { get; set; }
     }
 }

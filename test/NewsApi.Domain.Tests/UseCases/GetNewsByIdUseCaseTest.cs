@@ -43,6 +43,38 @@ namespace NewsApi.Domain.Tests.UseCases
             repositoryMock.Verify(r => r.GetById(fakeNews.Id), Times.Once);
         }
 
+        [Fact]
+        public async Task UseCase_WhenOk_ResultNewsListOfComments()
+        {
+            int numCommentByNews = 10;
+            var fakeNews = new Faker<News>()
+                .CustomInstantiator(f => new News(
+                    Guid.NewGuid(),
+                    f.Lorem.Sentence(3),
+                    f.Lorem.Paragraphs(3),
+                    new Author(f.Person.UserName)))
+                .RuleFor(n => n.Comments, f =>
+                    f.Make<Comment>(numCommentByNews, () => new Comment(f.Lorem.Paragraph(), new Author(f.Person.UserName)))
+                ).Generate();
 
+
+            var fakeComments = new Faker<Comment>()
+                .CustomInstantiator(f => new Comment(f.Lorem.Paragraph(), new Author(f.Person.UserName)))
+                .Generate(10);
+
+            var logger = new Mock<ILogger<GetNewsByIdUseCase>>().Object;
+            var validator = ValidatorsFactory.GetValidValidator<Guid>();
+
+            var repositoryMock = new Mock<INewsRepository>();
+            repositoryMock.Setup(r => r.GetById(fakeNews.Id)).ReturnsAsync(fakeNews);
+
+            var useCase = new GetNewsByIdUseCase(logger, validator, repositoryMock.Object);
+            var response = await useCase.Execute(fakeNews.Id);
+
+            response.Result.NumComments.Should().Be(numCommentByNews);
+            response.Result.Comments.Should()
+                .NotContain(x => x.Text == null || x.Id == Guid.Empty || x.Author == null || x.Author.UserName == null);
+            repositoryMock.Verify(r => r.GetById(fakeNews.Id), Times.Once);
+        }
     }
 }

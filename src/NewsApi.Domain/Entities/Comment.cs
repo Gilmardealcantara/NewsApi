@@ -5,7 +5,7 @@ namespace NewsApi.Domain.Entities
         public string Text { get; }
         public Author Author { get; set; }
 
-        public Comment(Author author, string text)
-            => (Author, Text) = (author, text);
+        public Comment(string text, Author author)
+            => (Text, Author) = (text, author);
     }
 }

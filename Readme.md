@@ -10,6 +10,7 @@
     - Número de Curtidas
     - Número de Visualizações
     - Número de comentários
+    - Author
 
 
 - Deve ser possível uma listagem com o preview das notícias que deverá conter em cada item

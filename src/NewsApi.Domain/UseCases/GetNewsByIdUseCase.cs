@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
@@ -24,7 +25,8 @@ namespace NewsApi.Domain.UseCases
             {
                 Id = news.Id,
                 Title = news.Title,
-                Content = news.Content
+                Content = news.Content,
+                Comments = news.Comments?.Take(10),
             };
             return this._response.SetResult(result);
         }
