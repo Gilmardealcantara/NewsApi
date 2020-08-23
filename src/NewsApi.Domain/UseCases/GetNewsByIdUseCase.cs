@@ -26,7 +26,8 @@ namespace NewsApi.Domain.UseCases
                 Id = news.Id,
                 Title = news.Title,
                 Content = news.Content,
-                Comments = news.Comments?.Take(10),
+                ThumbnailURL = news.ThumbnailURL,
+                Comments = news.Comments?.Take(10)
             };
             return this._response.SetResult(result);
         }

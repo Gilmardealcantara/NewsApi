@@ -13,6 +13,8 @@ namespace NewsApi.Domain.Entities
         public string Title { get; }
         public string Content { get; }
         public Author Author { get; }
+        public string ThumbnailURL { get; set; }
         public IEnumerable<Comment> Comments { get; set; }
+
     }
 }

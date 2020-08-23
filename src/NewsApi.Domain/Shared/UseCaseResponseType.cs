@@ -4,6 +4,7 @@ namespace NewsApi.Domain.Shared
     {
         Success = 1,
         ValidateError,
+        ResourceNotFountError,
         ExceptionError,
     }
 }

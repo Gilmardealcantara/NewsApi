@@ -10,6 +10,7 @@ namespace NewsApi.Domain.Dtos
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
+        public string ThumbnailURL { get; set; }
         public int? NumComments { get { return Comments?.Count(); } }
         public IEnumerable<Comment> Comments { get; set; }
     }

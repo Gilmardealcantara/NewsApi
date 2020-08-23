@@ -26,6 +26,7 @@ namespace NewsApi.Domain.UseCases
             {
                 Id = news.Id,
                 Title = news.Title,
+                ThumbnailURL = news.ThumbnailURL,
                 ContentPreview = news.Content.Length > _contentPreviewSizeLimit
                     ? news.Content.Substring(0, _contentPreviewSizeLimit)
                     : news.Content

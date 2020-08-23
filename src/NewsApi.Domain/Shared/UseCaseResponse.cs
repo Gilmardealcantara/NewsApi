@@ -29,6 +29,11 @@ namespace NewsApi.Domain.Shared
             return this.SetErrors(errors);
         }
 
+        public UseCaseResponse<T> SetResourceNotFountError(IEnumerable<ErrorMessage> errors = null)
+        {
+            this.Status = UseCaseResponseStatus.ResourceNotFountError;
+            return this.SetErrors(errors);
+        }
 
         public UseCaseResponse<T> SetRequestValidatorError(IEnumerable<ValidationFailure> validationErrors)
         {
@@ -38,6 +43,6 @@ namespace NewsApi.Domain.Shared
         }
 
         public bool Success()
-            => Result != null && (Errors == null || Errors.Count() <= 0);
+            => Status == UseCaseResponseStatus.Success && (Errors == null || Errors.Count() <= 0);
     }
 }
