@@ -24,7 +24,9 @@ namespace NewsApi.Domain.Tests.UseCases
                     f.Lorem.Sentence(3),
                     f.Lorem.Paragraphs(3),
                     new Author(f.Person.UserName)
-                )).Generate();
+                ))
+                .RuleFor(n => n.ThumbnailURL, (f, n) => $"https://s3.amazonaws.com/bucketname/{n.Id}.png")
+                .Generate();
 
             var logger = new Mock<ILogger<GetNewsByIdUseCase>>().Object;
             var validator = ValidatorsFactory.GetValidValidator<Guid>();
@@ -40,6 +42,7 @@ namespace NewsApi.Domain.Tests.UseCases
             response.Result.Id.Should().Be(fakeNews.Id);
             response.Result.Title.Should().Be(fakeNews.Title);
             response.Result.Content.Should().Be(fakeNews.Content);
+            response.Result.ThumbnailURL.Should().Be(fakeNews.ThumbnailURL);
             repositoryMock.Verify(r => r.GetById(fakeNews.Id), Times.Once);
         }
 

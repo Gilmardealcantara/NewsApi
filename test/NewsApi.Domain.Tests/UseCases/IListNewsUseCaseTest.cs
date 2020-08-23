@@ -28,7 +28,9 @@ namespace NewsApi.Domain.Tests.UseCases
                     f.Lorem.Sentence(3),
                     f.Lorem.Letter(contentSize),
                     new Author(f.Person.UserName)
-                )).Generate(10);
+                ))
+                .RuleFor(n => n.ThumbnailURL, (f, n) => $"https://s3.amazonaws.com/bucketname/{n.Id}.png")
+                .Generate(10);
 
             var logger = new Mock<ILogger<ListNewsUseCase>>().Object;
             var repositoryMock = new Mock<INewsRepository>();
@@ -49,6 +51,7 @@ namespace NewsApi.Domain.Tests.UseCases
                     || x.ContentPreview == null
                     || x.ContentPreview.Length > contentPreviewSizeLimit
                     || x.Id == Guid.Empty
+                    || x.ThumbnailURL == null
                 );
 
             repositoryMock.Verify(r => r.GetAll(), Times.Once);
