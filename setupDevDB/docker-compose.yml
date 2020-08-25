@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  news-sqlserver:
+    build:
+      context: ../
+      dockerfile: ./setupDevDB/Dockerfile
+    restart: always
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Senha@123
+      - MSSQL_PID=Developer
+    ports:
+      - "1433:1433"
