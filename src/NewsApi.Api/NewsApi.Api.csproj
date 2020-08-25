@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NewsApi.Domain\NewsApi.Domain.csproj" />
+    <ProjectReference Include="..\NewsApi.DomainServices\NewsApi.DomainServices.csproj" />
   </ItemGroup>
 
   <ItemGroup>

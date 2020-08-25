@@ -10,19 +10,24 @@ namespace NewsApi.Api
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+            var appConfig = services.ConfigureApp(_configuration);
+            services.ConfigureSwagger();
+            services.ConfigureRepository(appConfig);
+
             services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);
             services.AddResponseCompression(options => options.Providers.Add<GzipCompressionProvider>());
 
-            services.ConfigureSwagger();
 
             services.AddControllers().AddNewtonsoftJson(options =>
             {
