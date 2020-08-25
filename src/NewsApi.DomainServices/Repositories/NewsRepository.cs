@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using NewsApi.Domain.Entities;
@@ -27,15 +28,17 @@ namespace NewsApi.DomainServices.Repositories
                 n.[Title],
                 n.[ThumbnailURL],
                 n.[AuthorId] Author_Id, 
-                a.[UserName] Author_UserName,
-                c.CommentId Comment_Id,
-                c.Text Comment_Text,
-                c.AuthorId Comment_Author_Id,
-                ac.UserName Comment_Author_UserName
+                a.[UserName] Author_UserName
             FROM [News] n 
             JOIN Authors a ON n.AuthorId = a.AuthorId;";
 
-            return await _dbConnection.QueryAsync<News>(sql);
+            return (await _dbConnection.QueryAsync(sql))
+                .Select(f => new News(
+                    (Guid)f.Id, f.Title, f.Content,
+                    new Author(f.Author_Id, f.Author_UserName))
+                {
+                    ThumbnailURL = f.ThumbnailURL
+                });
         }
 
         public async Task<News> GetById(Guid id)

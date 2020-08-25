@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -17,10 +18,12 @@ namespace NewsApi.Api.Controllers
             => _logger = logger;
 
         [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<NewsListItem>), 200)]
         public async Task<IActionResult> Get([FromServices] IListNewsUseCase useCase)
            => UseCaseResponseToActionResult.Converter(await useCase.Execute());
 
         [HttpGet("{id}")]
+        [ProducesResponseType(typeof(NewsResponse), 200)]
         public async Task<IActionResult> GetById([FromServices] IGetNewsByIdUseCase useCase, Guid id)
             => UseCaseResponseToActionResult.Converter(await useCase.Execute(id));
 

@@ -23,6 +23,7 @@ namespace NewsApi.Api
 
             var appConfig = services.ConfigureApp(_configuration);
             services.ConfigureSwagger();
+            services.ConfigureUseCase();
             services.ConfigureRepository(appConfig);
 
             services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);
@@ -34,8 +35,7 @@ namespace NewsApi.Api
                 options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
                 options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver();
                 options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
-            })
-            .AddXmlSerializerFormatters(); ;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
