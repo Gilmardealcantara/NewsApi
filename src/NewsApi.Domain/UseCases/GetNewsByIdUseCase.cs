@@ -6,10 +6,11 @@ using Microsoft.Extensions.Logging;
 using NewsApi.Domain.Dtos;
 using NewsApi.Domain.Services.Repositories;
 using NewsApi.Domain.Shared;
+using NewsApi.Domain.UseCases.Interfaces;
 
 namespace NewsApi.Domain.UseCases
 {
-    public class GetNewsByIdUseCase : UseCaseBase<Guid, NewsResponse>
+    public class GetNewsByIdUseCase : UseCaseBase<Guid, NewsResponse>, IGetNewsByIdUseCase
     {
         private readonly INewsRepository _repository;
         public GetNewsByIdUseCase(

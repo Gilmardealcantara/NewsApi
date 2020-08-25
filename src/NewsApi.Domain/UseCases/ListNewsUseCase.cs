@@ -3,16 +3,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using NewsApi.Domain.Dtos;
-using NewsApi.Domain.Entities;
 using NewsApi.Domain.Services.Repositories;
 using NewsApi.Domain.Shared;
+using NewsApi.Domain.UseCases.Interfaces;
 
 namespace NewsApi.Domain.UseCases
 {
-    public class ListNewsUseCase : UseCaseBase<IEnumerable<NewsListItem>>
+    public class ListNewsUseCase : UseCaseBase<IEnumerable<NewsListItem>>, IListNewsUseCase
     {
         private readonly INewsRepository _repository;
         private readonly int _contentPreviewSizeLimit = 100;
+
         public ListNewsUseCase(
             ILogger<ListNewsUseCase> logger,
             INewsRepository repository)

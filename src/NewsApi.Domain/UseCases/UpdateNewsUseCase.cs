@@ -7,10 +7,11 @@ using NewsApi.Domain.Entities;
 using NewsApi.Domain.Services.ExternalApis;
 using NewsApi.Domain.Services.Repositories;
 using NewsApi.Domain.Shared;
+using NewsApi.Domain.UseCases.Interfaces;
 
 namespace NewsApi.Domain.UseCases
 {
-    public class UpdateNewsUseCase : UseCaseBase<UpdateNewsRequest, News>
+    public class UpdateNewsUseCase : UseCaseBase<UpdateNewsRequest, News>, IUpdateNewsUseCase
     {
         INewsRepository _repository;
         IImageStorageService _imageStorage;
