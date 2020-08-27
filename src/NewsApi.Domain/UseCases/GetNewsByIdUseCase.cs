@@ -24,13 +24,14 @@ namespace NewsApi.Domain.UseCases
             var news = await _repository.GetById(request);
             if (news is null)
                 return this._response.SetResourceNotFountError();
+            var comments = await _repository.GetComments(news.Id, 10);
             var result = new NewsResponse
             {
                 Id = news.Id,
                 Title = news.Title,
                 Content = news.Content,
                 ThumbnailURL = news.ThumbnailURL,
-                Comments = news.Comments?.Take(10)
+                Comments = comments
             };
             return this._response.SetResult(result);
         }

@@ -23,6 +23,7 @@ namespace NewsApi.Api
 
             var appConfig = services.ConfigureApp(_configuration);
             services.ConfigureSwagger();
+            services.ConfigureValidator();
             services.ConfigureUseCase();
             services.ConfigureRepository(appConfig);
 

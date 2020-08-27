@@ -44,29 +44,34 @@ namespace NewsApi.DomainServices.Repositories
 
         public async Task<News> GetById(Guid id)
         {
-            const string sql = @"SELECT 
+
+            const string newsQuery = @"SELECT 
                 n.[NewsId] Id,
                 n.[Title],
                 n.[Content],
                 n.[ThumbnailURL],
                 n.[AuthorId] Author_Id, 
-                a.[UserName] Author_UserName,
-                c.CommentId Comment_Id,
-                c.Text Comment_Text,
-                c.AuthorId Comment_Author_Id,
-                ac.UserName Comment_Author_UserName
+                a.[UserName] Author_UserName
             FROM [News] n 
             JOIN Authors a ON n.AuthorId = a.AuthorId
-            JOIN Comments c ON c.NewsId = n.NewsId 
-            JOIN Authors ac ON c.AuthorId = c.AuthorId
-            WHERE n.Id=@id";
+            WHERE n.NewsId=@id";
 
-            return await _dbConnection.QueryFirstOrDefaultAsync<News>(sql, new { id = id });
+            var newsQueryResult = await _dbConnection.QueryFirstOrDefaultAsync(newsQuery, new { id = id });
+            var news = new News(
+                (Guid)newsQueryResult.Id,
+                newsQueryResult.Title,
+                newsQueryResult.Content,
+                new Author(newsQueryResult.Author_Id, newsQueryResult.Author_UserName))
+            {
+                ThumbnailURL = newsQueryResult.ThumbnailURL
+            };
+
+            return news;
         }
 
-        public async Task<IEnumerable<Comment>> GetComments(Guid id)
+        public async Task<IEnumerable<Comment>> GetComments(Guid id, int limit = 10)
         {
-            const string sql = @"SELECT 
+            const string sql = @"SELECT TOP (@limit)
                 c.[CommentId] Id
                 ,c.[Text]
                 ,c.[NewsId]
@@ -74,9 +79,10 @@ namespace NewsApi.DomainServices.Repositories
                 ,a.UserName Author_UserName
             FROM [Comments] c
             JOIN Authors a ON c.AuthorId = c.AuthorId
-            Where NewsId = id";
+            Where NewsId = @id";
 
-            return await _dbConnection.QueryAsync<Comment>(sql, new { id = id });
+            return (await _dbConnection.QueryAsync(sql, new { id, limit }))
+                .Select(f => new Comment(f.Text, new Author(f.Author_Id, f.Author_UserName)));
         }
 
         public Task Save(News news)

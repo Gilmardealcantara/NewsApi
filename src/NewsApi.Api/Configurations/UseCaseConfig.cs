@@ -9,9 +9,9 @@ namespace NewsApi.Api.Configurations
         public static void ConfigureUseCase(this IServiceCollection services)
         {
             services.AddTransient<IListNewsUseCase, ListNewsUseCase>();
-            // services.AddSingleton<IGetNewsByIdUseCase, GetNewsByIdUseCase>();
-            // services.AddSingleton<ICreateNewsUseCase, CreateNewsUseCase>();
-            // services.AddSingleton<IUpdateNewsUseCase, UpdateNewsUseCase>();
+            services.AddTransient<IGetNewsByIdUseCase, GetNewsByIdUseCase>();
+            // services.AddTransient<ICreateNewsUseCase, CreateNewsUseCase>();
+            // services.AddTransient<IUpdateNewsUseCase, UpdateNewsUseCase>();
         }
     }
 }

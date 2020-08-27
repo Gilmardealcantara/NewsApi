@@ -6,3 +6,10 @@ values (@authorId, 'gilmar.alcantara@gmail.com');
 
 insert into News (NewsId, Title, ThumbnailURL, Content, AuthorId)
 values (@newsId, 'Integration Test Title', null, 'Integration Test Content', @authorId);
+
+insert into Comments (CommentId, [Text], AuthorId, NewsId)
+values (NEWID(), 'Legal', @authorId, @newsId),
+(NEWID(), 'Top', @authorId, @newsId),
+(NEWID(), 'Muito Bom', @authorId, @newsId),
+(NEWID(), 'First', @authorId, @newsId),
+(NEWID(), 'hahahahha rrsrs', @authorId, @newsId);

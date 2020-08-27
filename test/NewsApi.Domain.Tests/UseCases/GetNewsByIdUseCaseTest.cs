@@ -56,9 +56,7 @@ namespace NewsApi.Domain.Tests.UseCases
                     f.Lorem.Sentence(3),
                     f.Lorem.Paragraphs(3),
                     new Author(f.Person.UserName)))
-                .RuleFor(n => n.Comments, f =>
-                    f.Make<Comment>(numCommentByNews, () => new Comment(f.Lorem.Paragraph(), new Author(f.Person.UserName)))
-                ).Generate();
+                .Generate();
 
 
             var fakeComments = new Faker<Comment>()
@@ -70,6 +68,7 @@ namespace NewsApi.Domain.Tests.UseCases
 
             var repositoryMock = new Mock<INewsRepository>();
             repositoryMock.Setup(r => r.GetById(fakeNews.Id)).ReturnsAsync(fakeNews);
+            repositoryMock.Setup(r => r.GetComments(fakeNews.Id, 10)).ReturnsAsync(fakeComments);
 
             var useCase = new GetNewsByIdUseCase(logger, validator, repositoryMock.Object);
             var response = await useCase.Execute(fakeNews.Id);
