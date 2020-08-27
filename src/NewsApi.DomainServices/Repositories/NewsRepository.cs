@@ -26,6 +26,7 @@ namespace NewsApi.DomainServices.Repositories
             const string sql = @"SELECT 
                 n.[NewsId] Id,
                 n.[Title],
+                n.[Content],
                 n.[ThumbnailURL],
                 n.[AuthorId] Author_Id, 
                 a.[UserName] Author_UserName
@@ -46,6 +47,7 @@ namespace NewsApi.DomainServices.Repositories
             const string sql = @"SELECT 
                 n.[NewsId] Id,
                 n.[Title],
+                n.[Content],
                 n.[ThumbnailURL],
                 n.[AuthorId] Author_Id, 
                 a.[UserName] Author_UserName,

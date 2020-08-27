@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using NewsApi.Domain.Dtos;
 using NewsApi.Domain.Services.Repositories;
 using NewsApi.Domain.Shared;
 using NewsApi.Domain.UseCases.Interfaces;
+using Newtonsoft.Json;
 
 namespace NewsApi.Domain.UseCases
 {
@@ -23,6 +25,7 @@ namespace NewsApi.Domain.UseCases
         protected override async Task<UseCaseResponse<IEnumerable<NewsListItem>>> OnExecute()
         {
             var all = await _repository.GetAll();
+
             var listNews = all.Select(news => new NewsListItem
             {
                 Id = news.Id,
