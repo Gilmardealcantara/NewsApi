@@ -22,6 +22,8 @@ namespace NewsApi.Domain.UseCases
         protected override async Task<UseCaseResponse<NewsResponse>> OnExecute(Guid request)
         {
             var news = await _repository.GetById(request);
+            if (news is null)
+                return this._response.SetResourceNotFountError();
             var result = new NewsResponse
             {
                 Id = news.Id,

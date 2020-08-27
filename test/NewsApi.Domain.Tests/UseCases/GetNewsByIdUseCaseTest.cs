@@ -79,5 +79,23 @@ namespace NewsApi.Domain.Tests.UseCases
                 .NotContain(x => x.Text == null || x.Id == Guid.Empty || x.Author == null || x.Author.UserName == null);
             repositoryMock.Verify(r => r.GetById(fakeNews.Id), Times.Once);
         }
+
+        [Fact]
+        public async Task UseCase_WhenNewsNotExists_ReturnNotFount()
+        {
+
+            var personId = Guid.NewGuid();
+            var logger = new Mock<ILogger<GetNewsByIdUseCase>>().Object;
+            var validator = ValidatorsFactory.GetValidValidator<Guid>();
+
+            var repositoryMock = new Mock<INewsRepository>();
+            repositoryMock.Setup(r => r.GetById(personId))
+                .ReturnsAsync((News)null);
+
+            var useCase = new GetNewsByIdUseCase(logger, validator, repositoryMock.Object);
+            var response = await useCase.Execute(personId);
+
+            response.Status.Should().Be(UseCaseResponseStatus.ResourceNotFountError);
+        }
     }
 }
