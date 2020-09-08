@@ -4,8 +4,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
-using NewsApi.Domain.Entities;
-using NewsApi.Domain.Services.Repositories;
+using NewsApi.Application.Entities;
+using NewsApi.Application.Services.Repositories;
 
 namespace NewsApi.DomainServices.Repositories
 {

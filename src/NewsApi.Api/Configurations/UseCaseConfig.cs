@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
-using NewsApi.Domain.UseCases;
-using NewsApi.Domain.UseCases.Interfaces;
+using NewsApi.Application.UseCases;
+using NewsApi.Application.UseCases.Interfaces;
 
 namespace NewsApi.Api.Configurations
 {

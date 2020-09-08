@@ -5,11 +5,11 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{79D735F7-282E-4E10-9253-7A031B67CD57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsApi.Domain", "src\NewsApi.Domain\NewsApi.Domain.csproj", "{2ED33164-54C3-4CB2-8C0F-74CD4C3CE493}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsApi.Application", "src\NewsApi.Application\NewsApi.Application.csproj", "{2ED33164-54C3-4CB2-8C0F-74CD4C3CE493}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{CE20D8CF-608C-40BA-AA65-6D78BA8E64DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsApi.Domain.Tests", "test\NewsApi.Domain.Tests\NewsApi.Domain.Tests.csproj", "{A5F9BEA0-4E4E-4D5A-9B4D-F970ADFC14DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsApi.Application.Tests", "test\NewsApi.Application.Tests\NewsApi.Application.Tests.csproj", "{A5F9BEA0-4E4E-4D5A-9B4D-F970ADFC14DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewsApi.Api", "src\NewsApi.Api\NewsApi.Api.csproj", "{B0BF788D-F5C3-487E-AC70-84237D6450FE}"
 EndProject

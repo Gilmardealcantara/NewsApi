@@ -1,7 +1,7 @@
 using System;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
-using NewsApi.Domain.Shared;
+using NewsApi.Application.Shared;
 
 namespace NewsApi.Api
 {

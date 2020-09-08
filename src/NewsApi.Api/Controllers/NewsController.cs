@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using NewsApi.Domain.Dtos;
-using NewsApi.Domain.UseCases.Interfaces;
+using NewsApi.Application.Dtos;
+using NewsApi.Application.UseCases.Interfaces;
 
 namespace NewsApi.Api.Controllers
 {

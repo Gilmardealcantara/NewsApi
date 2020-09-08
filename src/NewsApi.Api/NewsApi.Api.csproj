@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
-    <ProjectReference Include="..\NewsApi.Domain\NewsApi.Domain.csproj" />
+    <ProjectReference Include="..\NewsApi.Application\NewsApi.Application.csproj" />
     <ProjectReference Include="..\NewsApi.DomainServices\NewsApi.DomainServices.csproj" />
   </ItemGroup>
 

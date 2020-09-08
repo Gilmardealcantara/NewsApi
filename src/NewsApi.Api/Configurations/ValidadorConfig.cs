@@ -1,7 +1,7 @@
 using System;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using NewsApi.Domain.Validator;
+using NewsApi.Application.Validator;
 
 namespace NewsApi.Api.Configurations
 {

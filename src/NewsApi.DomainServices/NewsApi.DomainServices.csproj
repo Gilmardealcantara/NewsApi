@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NewsApi.Domain\NewsApi.Domain.csproj" />
+    <ProjectReference Include="..\NewsApi.Application\NewsApi.Application.csproj" />
   </ItemGroup>
 
 </Project>
