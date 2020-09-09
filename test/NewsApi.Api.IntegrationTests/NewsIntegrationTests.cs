@@ -1,3 +1,4 @@
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -14,12 +15,12 @@ namespace NewsApi.Api.IntegrationTests
 {
     public class NewsIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
-        private readonly ApplicationConfig _applicationConfig;
+        private readonly CustomWebApplicationFactory<Startup> _factory;
         private readonly HttpClient _client;
 
         public NewsIntegrationTests(CustomWebApplicationFactory<Startup> factory)
         {
-            _applicationConfig = factory.ApplicationConfig;
+            _factory = factory;
             _client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
         }
 
@@ -81,13 +82,13 @@ namespace NewsApi.Api.IntegrationTests
                     name = "Gilmar de Alcantara",
                 }
             };
-            var token = TokenFactory.GetToken(_applicationConfig.Authorization);
+            var token = TokenFactory.GetToken(_factory.ApplicationConfig.Authorization);
 
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, token);
             var response = await _client.PostAsJsonAsync("/news", payload);
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             var result = await response.Content.ReadAsAsync<JObject>();
-            result.ContainsKey("id");
+            result.Should().ContainKey("id");
         }
 
         [Fact]
@@ -105,7 +106,7 @@ namespace NewsApi.Api.IntegrationTests
                     name = "Gilmar de Alcantara",
                 }
             };
-            var token = TokenFactory.GetToken(_applicationConfig.Authorization);
+            var token = TokenFactory.GetToken(_factory.ApplicationConfig.Authorization);
 
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, token);
             var response = await _client.PostAsJsonAsync("/news", payload);
@@ -121,21 +122,22 @@ namespace NewsApi.Api.IntegrationTests
         {
             var payload = new
             {
-                Title = "Test title",
-                Content = "Test Content",
+                Title = "Test title 2",
+                Content = "Test Content 2",
                 Author = new
                 {
                     userName = "gilmardealcantara@gmail.com",
                     name = "Gilmar de Alcantara",
                 }
             };
-            var token = TokenFactory.GetToken(_applicationConfig.Authorization);
+            Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+            var token = TokenFactory.GetToken(_factory.ApplicationConfig.Authorization);
 
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, token);
-            var response = await _client.PostAsJsonAsync("/news", payload);
+            var response = await _client.PutAsJsonAsync("/news/71c0ac73-de91-484b-8550-b6bfa6f71d34", payload);
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             var result = await response.Content.ReadAsAsync<JObject>();
-            result.ContainsKey("id");
+            result.Should().Contain("id", "71c0ac73-de91-484b-8550-b6bfa6f71d34");
         }
     }
 }

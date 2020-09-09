@@ -1,14 +1,9 @@
-using System;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 using NewsApi.Api.Configurations;
 
 namespace NewsApi.Api
@@ -16,11 +11,8 @@ namespace NewsApi.Api
     public class Startup
     {
         private readonly IConfiguration _configuration;
-
         public Startup(IConfiguration configuration)
             => _configuration = configuration;
-
-
 
         public void ConfigureServices(IServiceCollection services)
         {

@@ -92,17 +92,22 @@ namespace NewsApi.DomainServices.Repositories
         {
             var keys = "(NewsId, Title, Content, AuthorId)";
             var values = "(@NewsId, @Title, @Content, @AuthorId)";
-            var comand = $"INSERT INTO News {keys} values {values}";
+            var command = $"INSERT INTO News {keys} values {values}";
 
             var parameters = new { news.Title, news.Content, NewsId = news.Id, AuthorId = news.Author.Id };
-            await _dbConnection.ExecuteAsync(comand, parameters);
+            await _dbConnection.ExecuteAsync(command, parameters);
         }
 
-        public Task Update(News news)
+        public async Task Update(News news)
         {
-            Console.WriteLine(JsonConvert.SerializeObject(news, Formatting.Indented));
+            var command = @"UPDATE News 
+                SET Title = @Title,
+                Content = @Content,
+                AuthorId = @AuthorId
+                WHERE NewsId = @NewsId";
 
-            throw new NotImplementedException();
+            var parameters = new { news.Title, news.Content, NewsId = news.Id, AuthorId = news.Author.Id };
+            await _dbConnection.ExecuteAsync(command, parameters);
         }
     }
 }

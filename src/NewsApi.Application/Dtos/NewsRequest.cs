@@ -11,6 +11,12 @@ namespace NewsApi.Application.Dtos
         [JsonIgnore]
         public AuthorRequest Author { get; set; }
         public News ToNews(Author author) => new News(Title, Content, author);
+
+        public CreateNewsRequest WithAuthor(AuthorRequest author)
+        {
+            this.Author = author;
+            return this;
+        }
     }
 
     public class UpdateNewsRequest
@@ -27,6 +33,11 @@ namespace NewsApi.Application.Dtos
         public UpdateNewsRequest WithId(Guid id)
         {
             this.Id = id;
+            return this;
+        }
+        public UpdateNewsRequest WithAuthor(AuthorRequest author)
+        {
+            this.Author = author;
             return this;
         }
     }

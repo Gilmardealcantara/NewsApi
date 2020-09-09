@@ -33,19 +33,28 @@ namespace NewsApi.Api.Controllers
         [HttpPost, Authorize]
         public async Task<IActionResult> Post([FromServices] ICreateNewsUseCase useCase, CreateNewsRequest request)
         {
-            var userName = this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
-            var name = this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
-            request.Author = new AuthorRequest
-            {
-                UserName = userName,
-                Name = name
-            };
-            var response = await useCase.Execute(request);
+            var author = this.GetAuthorFromClaims();
+            var response = await useCase.Execute(request.WithAuthor(author));
             return UseCaseResponseToActionResult.Converter(response);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromServices] IUpdateNewsUseCase useCase, Guid id, UpdateNewsRequest request)
-            => UseCaseResponseToActionResult.Converter(await useCase.Execute(request.WithId(id)));
+        {
+            var author = this.GetAuthorFromClaims();
+            var response = await useCase.Execute(request.WithId(id).WithAuthor(author));
+            return UseCaseResponseToActionResult.Converter(response);
+        }
+
+        private AuthorRequest GetAuthorFromClaims()
+        {
+            var userName = this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+            var name = this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+            return new AuthorRequest
+            {
+                UserName = userName,
+                Name = name
+            };
+        }
     }
 }
