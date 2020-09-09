@@ -8,19 +8,18 @@ using NewsApi.Application.Entities;
 using NewsApi.Application.Services.Repositories;
 using NewsApi.Application.Shared;
 using NewsApi.Application.Tests.Validadors;
-using NewsApi.Application.UseCases;
 using NewsApi.Application.UseCases.News;
 using Xunit;
 
-namespace NewsApi.Application.Tests.UseCases
+namespace NewsApi.Application.Tests.UseCases.News
 {
     public class GetNewsByIdUseCaseTest
     {
         [Fact]
         public async Task UseCase_WhenOk_ResultNewsWithIdTitleAndContent()
         {
-            var fakeNews = new Faker<News>()
-                .CustomInstantiator(f => new News(
+            var fakeNews = new Faker<Entities.News>()
+                .CustomInstantiator(f => new Entities.News(
                     Guid.NewGuid(),
                     f.Lorem.Sentence(3),
                     f.Lorem.Paragraphs(3),
@@ -51,8 +50,8 @@ namespace NewsApi.Application.Tests.UseCases
         public async Task UseCase_WhenOk_ResultNewsListOfComments()
         {
             int numCommentByNews = 10;
-            var fakeNews = new Faker<News>()
-                .CustomInstantiator(f => new News(
+            var fakeNews = new Faker<Entities.News>()
+                .CustomInstantiator(f => new Entities.News(
                     Guid.NewGuid(),
                     f.Lorem.Sentence(3),
                     f.Lorem.Paragraphs(3),
@@ -90,7 +89,7 @@ namespace NewsApi.Application.Tests.UseCases
 
             var repositoryMock = new Mock<INewsRepository>();
             repositoryMock.Setup(r => r.GetById(personId))
-                .ReturnsAsync((News)null);
+                .ReturnsAsync((Entities.News)null);
 
             var useCase = new GetNewsByIdUseCase(logger, validator, repositoryMock.Object);
             var response = await useCase.Execute(personId);

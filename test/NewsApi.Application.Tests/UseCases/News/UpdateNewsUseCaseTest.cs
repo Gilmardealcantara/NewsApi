@@ -8,11 +8,10 @@ using NewsApi.Application.Entities;
 using NewsApi.Application.Services.Repositories;
 using NewsApi.Application.Shared;
 using NewsApi.Application.Tests.Validadors;
-using NewsApi.Application.UseCases;
 using NewsApi.Application.UseCases.News;
 using Xunit;
 
-namespace NewsApi.Application.Tests.UseCases
+namespace NewsApi.Application.Tests.UseCases.News
 {
     public class UpdateNewsUseCaseTest
     {
@@ -21,7 +20,7 @@ namespace NewsApi.Application.Tests.UseCases
         public async Task UseCase_WhenNewsAuthorNotchanged_ReturnUpdatedNews()
         {
 
-            var oldNews = new News("Test title", "Test Content", new Author("gilmardealcantara@gmail.com", "Gilmar Alcantara"));
+            var oldNews = new Entities.News("Test title", "Test Content", new Author("gilmardealcantara@gmail.com", "Gilmar Alcantara"));
             var fakeRequest = new UpdateNewsRequest
             {
                 Id = oldNews.Id,
@@ -49,7 +48,7 @@ namespace NewsApi.Application.Tests.UseCases
             response.Success().Should().BeTrue();
 
             newsRepositoryMock.Verify(r => r.GetById(fakeRequest.Id), Times.Once);
-            newsRepositoryMock.Verify(r => r.Update(It.IsAny<News>()), Times.Once);
+            newsRepositoryMock.Verify(r => r.Update(It.IsAny<Entities.News>()), Times.Once);
             authorRepositoryMock.Verify(r => r.GeyByUserName(fakeRequest.Author.UserName), Times.Never);
             authorRepositoryMock.Verify(r => r.Save(It.IsAny<Author>()), Times.Never);
         }
@@ -59,7 +58,7 @@ namespace NewsApi.Application.Tests.UseCases
         public async Task UseCase_WhenNewsAuthorChangedAndExistsInDb_ReturnUpdatedNews()
         {
 
-            var oldNews = new News("Test title", "Test Content", new Author("gilmardealcantara@gmail.com", "Gilmar Alcantara"));
+            var oldNews = new Entities.News("Test title", "Test Content", new Author("gilmardealcantara@gmail.com", "Gilmar Alcantara"));
             var fakeRequest = new UpdateNewsRequest
             {
                 Id = oldNews.Id,
@@ -88,7 +87,7 @@ namespace NewsApi.Application.Tests.UseCases
             response.Success().Should().BeTrue();
 
             newsRepositoryMock.Verify(r => r.GetById(fakeRequest.Id), Times.Once);
-            newsRepositoryMock.Verify(r => r.Update(It.IsAny<News>()), Times.Once);
+            newsRepositoryMock.Verify(r => r.Update(It.IsAny<Entities.News>()), Times.Once);
             authorRepositoryMock.Verify(r => r.GeyByUserName(fakeRequest.Author.UserName), Times.Once);
             authorRepositoryMock.Verify(r => r.Save(It.IsAny<Author>()), Times.Never);
         }
@@ -97,7 +96,7 @@ namespace NewsApi.Application.Tests.UseCases
         public async Task UseCase_WhenNewsAuthorChangedAndNotExistsInDb_ReturnUpdatedNews()
         {
 
-            var oldNews = new News("Test title", "Test Content", new Author("gilmardealcantara@gmail.com", "Gilmar Alcantara"));
+            var oldNews = new Entities.News("Test title", "Test Content", new Author("gilmardealcantara@gmail.com", "Gilmar Alcantara"));
             var fakeRequest = new UpdateNewsRequest
             {
                 Id = oldNews.Id,
@@ -124,7 +123,7 @@ namespace NewsApi.Application.Tests.UseCases
             response.Success().Should().BeTrue();
 
             newsRepositoryMock.Verify(r => r.GetById(fakeRequest.Id), Times.Once);
-            newsRepositoryMock.Verify(r => r.Update(It.IsAny<News>()), Times.Once);
+            newsRepositoryMock.Verify(r => r.Update(It.IsAny<Entities.News>()), Times.Once);
             authorRepositoryMock.Verify(r => r.GeyByUserName(fakeRequest.Author.UserName), Times.Once);
             authorRepositoryMock.Verify(r => r.Save(It.IsAny<Author>()), Times.Once);
         }
@@ -159,7 +158,7 @@ namespace NewsApi.Application.Tests.UseCases
             response.Success().Should().BeFalse();
 
             repositorymock.Verify(r => r.GetById(fakeRequest.Id), Times.Once);
-            repositorymock.Verify(r => r.Update(It.IsAny<News>()), Times.Never);
+            repositorymock.Verify(r => r.Update(It.IsAny<Entities.News>()), Times.Never);
             authorRepositoryMock.Verify(r => r.GeyByUserName(fakeRequest.Author.UserName), Times.Never);
             authorRepositoryMock.Verify(r => r.Save(It.IsAny<Author>()), Times.Never);
         }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,8 +5,7 @@ using Microsoft.Extensions.Logging;
 using NewsApi.Application.Dtos;
 using NewsApi.Application.Services.Repositories;
 using NewsApi.Application.Shared;
-using NewsApi.Application.UseCases.Interfaces;
-using Newtonsoft.Json;
+using NewsApi.Application.UseCases.Interfaces.News;
 
 namespace NewsApi.Application.UseCases.News
 {

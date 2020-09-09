@@ -7,11 +7,10 @@ using Moq;
 using NewsApi.Application.Entities;
 using NewsApi.Application.Services.Repositories;
 using NewsApi.Application.Shared;
-using NewsApi.Application.UseCases;
 using NewsApi.Application.UseCases.News;
 using Xunit;
 
-namespace NewsApi.Application.Tests.UseCases
+namespace NewsApi.Application.Tests.UseCases.News
 {
     public class IListNewsUseCaseTest
     {
@@ -23,8 +22,8 @@ namespace NewsApi.Application.Tests.UseCases
         {
             //Given
             int contentPreviewSizeLimit = 100;
-            var newsList = new Faker<News>()
-                .CustomInstantiator(f => new News(
+            var newsList = new Faker<Entities.News>()
+                .CustomInstantiator(f => new Entities.News(
                     Guid.NewGuid(),
                     f.Lorem.Sentence(3),
                     f.Lorem.Letter(contentSize),

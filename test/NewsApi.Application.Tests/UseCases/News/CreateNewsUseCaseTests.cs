@@ -11,7 +11,7 @@ using Bogus;
 using NewsApi.Application.Tests.Validadors;
 using NewsApi.Application.UseCases.News;
 
-namespace NewsApi.Application.Tests.UseCases
+namespace NewsApi.Application.Tests.UseCases.News
 {
     public class CreateNewsUseCaseTests
     {
@@ -50,7 +50,7 @@ namespace NewsApi.Application.Tests.UseCases
             response.Result.Author.Should().NotBeNull();
             response.Result.Author.Id.Should().NotBeEmpty();
 
-            repositoryMock.Verify(r => r.Save(It.IsAny<News>()), Times.Once);
+            repositoryMock.Verify(r => r.Save(It.IsAny<Entities.News>()), Times.Once);
             authorRepositoryMock.Verify(r => r.GeyByUserName(request.Author.UserName), Times.Once);
             authorRepositoryMock.Verify(r => r.Save(It.IsAny<Author>()), Times.Never);
 
@@ -88,7 +88,7 @@ namespace NewsApi.Application.Tests.UseCases
             response.Result.Author.Should().NotBeNull();
             response.Result.Author.Id.Should().NotBeEmpty();
 
-            repositoryMock.Verify(r => r.Save(It.IsAny<News>()), Times.Once);
+            repositoryMock.Verify(r => r.Save(It.IsAny<Entities.News>()), Times.Once);
             authorRepositoryMock.Verify(r => r.GeyByUserName(request.Author.UserName), Times.Once);
             authorRepositoryMock.Verify(r => r.Save(It.IsAny<Author>()), Times.Once);
         }

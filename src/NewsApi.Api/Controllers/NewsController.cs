@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NewsApi.Application.Dtos;
-using NewsApi.Application.UseCases.Interfaces;
+using NewsApi.Application.UseCases.Interfaces.News;
 
 namespace NewsApi.Api.Controllers
 {

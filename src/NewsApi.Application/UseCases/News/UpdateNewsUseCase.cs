@@ -5,7 +5,7 @@ using NewsApi.Application.Dtos;
 using NewsApi.Application.Entities;
 using NewsApi.Application.Services.Repositories;
 using NewsApi.Application.Shared;
-using NewsApi.Application.UseCases.Interfaces;
+using NewsApi.Application.UseCases.Interfaces.News;
 
 namespace NewsApi.Application.UseCases.News
 {

@@ -1,5 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
-using NewsApi.Application.UseCases.Interfaces;
+using NewsApi.Application.UseCases.Interfaces.News;
 using NewsApi.Application.UseCases.News;
 
 namespace NewsApi.Api.Configurations

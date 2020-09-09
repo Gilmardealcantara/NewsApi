@@ -1,8 +1,7 @@
 using NewsApi.Application.Dtos;
-using NewsApi.Application.Entities;
 using NewsApi.Application.Shared;
 
-namespace NewsApi.Application.UseCases.Interfaces
+namespace NewsApi.Application.UseCases.Interfaces.News
 {
     public interface IUpdateNewsUseCase : IUseCase<UpdateNewsRequest, Entities.News>
     {
