@@ -34,7 +34,7 @@ namespace NewsApi.Api.Controllers
         public async Task<IActionResult> Post([FromServices] ICreateNewsUseCase useCase, CreateNewsRequest request)
         {
             var author = this.GetAuthorFromClaims();
-            var response = await useCase.Execute(request.WithAuthor(author));
+            var response = await useCase.Execute((CreateNewsRequest)request.WithAuthor(author));
             return UseCaseResponseToActionResult.Converter(response);
         }
 
@@ -42,7 +42,7 @@ namespace NewsApi.Api.Controllers
         public async Task<IActionResult> Update([FromServices] IUpdateNewsUseCase useCase, Guid id, UpdateNewsRequest request)
         {
             var author = this.GetAuthorFromClaims();
-            var response = await useCase.Execute(request.WithId(id).WithAuthor(author));
+            var response = await useCase.Execute((UpdateNewsRequest)request.WithId(id).WithAuthor(author));
             return UseCaseResponseToActionResult.Converter(response);
         }
 
