@@ -34,12 +34,12 @@ namespace NewsApi.Application.Tests.UseCases
 
             var repositoryMock = new Mock<INewsRepository>();
 
-            var authRepositoryMock = new Mock<IAuthorRepository>();
-            authRepositoryMock.Setup(r => r.GeyByUserName(request.Author.UserName))
+            var authorRepositoryMock = new Mock<IAuthorRepository>();
+            authorRepositoryMock.Setup(r => r.GeyByUserName(request.Author.UserName))
                 .ReturnsAsync(request.Author.ToAuthor());
 
             //When
-            var useCase = new CreateNewsUseCase(logger, validator, repositoryMock.Object, authRepositoryMock.Object);
+            var useCase = new CreateNewsUseCase(logger, validator, repositoryMock.Object, authorRepositoryMock.Object);
             var response = await useCase.Execute(request);
 
             //Then
@@ -51,8 +51,8 @@ namespace NewsApi.Application.Tests.UseCases
             response.Result.Author.Id.Should().NotBeEmpty();
 
             repositoryMock.Verify(r => r.Save(It.IsAny<News>()), Times.Once);
-            authRepositoryMock.Verify(r => r.GeyByUserName(request.Author.UserName), Times.Once);
-            authRepositoryMock.Verify(r => r.Save(It.IsAny<Author>()), Times.Never);
+            authorRepositoryMock.Verify(r => r.GeyByUserName(request.Author.UserName), Times.Once);
+            authorRepositoryMock.Verify(r => r.Save(It.IsAny<Author>()), Times.Never);
 
         }
 
@@ -74,10 +74,10 @@ namespace NewsApi.Application.Tests.UseCases
             var validator = ValidatorsFactory.GetValidValidator<CreateNewsRequest>();
 
             var repositoryMock = new Mock<INewsRepository>();
-            var authRepositoryMock = new Mock<IAuthorRepository>();
+            var authorRepositoryMock = new Mock<IAuthorRepository>();
 
             //When
-            var useCase = new CreateNewsUseCase(logger, validator, repositoryMock.Object, authRepositoryMock.Object);
+            var useCase = new CreateNewsUseCase(logger, validator, repositoryMock.Object, authorRepositoryMock.Object);
             var response = await useCase.Execute(request);
 
             //Then
@@ -89,8 +89,8 @@ namespace NewsApi.Application.Tests.UseCases
             response.Result.Author.Id.Should().NotBeEmpty();
 
             repositoryMock.Verify(r => r.Save(It.IsAny<News>()), Times.Once);
-            authRepositoryMock.Verify(r => r.GeyByUserName(request.Author.UserName), Times.Once);
-            authRepositoryMock.Verify(r => r.Save(It.IsAny<Author>()), Times.Once);
+            authorRepositoryMock.Verify(r => r.GeyByUserName(request.Author.UserName), Times.Once);
+            authorRepositoryMock.Verify(r => r.Save(It.IsAny<Author>()), Times.Once);
         }
     }
 }

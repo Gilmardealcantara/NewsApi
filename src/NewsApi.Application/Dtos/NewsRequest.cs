@@ -18,9 +18,9 @@ namespace NewsApi.Application.Dtos
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public Author Author { get; set; }
-        public News ToNews(News oldNews)
-            => new News(this.Id, Title ?? oldNews.Title, Content ?? oldNews.Content, Author ?? oldNews.Author);
+        public AuthorRequest Author { get; set; }
+        public News ToNews(Author author)
+            => new News(this.Id, Title, Content, author);
 
         public UpdateNewsRequest WithId(Guid id)
         {

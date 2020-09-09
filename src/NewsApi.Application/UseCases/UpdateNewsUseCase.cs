@@ -12,14 +12,16 @@ namespace NewsApi.Application.UseCases
 {
     public class UpdateNewsUseCase : UseCaseBase<UpdateNewsRequest, News>, IUpdateNewsUseCase
     {
-        INewsRepository _repository;
+        private readonly INewsRepository _repository;
+        private readonly IAuthorRepository _authorRepository;
 
         public UpdateNewsUseCase(
             ILogger<UpdateNewsUseCase> logger,
             IValidator<UpdateNewsRequest> validator,
-            INewsRepository repository)
+            INewsRepository repository,
+             IAuthorRepository authorRepository)
             : base(logger, validator, ("03", "Error unexpected when update news"))
-           => _repository = repository;
+           => (_repository, _authorRepository) = (repository, authorRepository);
 
         protected override async Task<UseCaseResponse<News>> OnExecute(UpdateNewsRequest request)
         {
@@ -27,7 +29,19 @@ namespace NewsApi.Application.UseCases
             if (oldNews is null)
                 return _response.SetResourceNotFountError();
 
-            var updatedNews = request.ToNews(oldNews);
+            Author author = oldNews.Author;
+
+            if (oldNews.Author.UserName != request.Author.UserName)
+            {
+                author = await _authorRepository.GeyByUserName(request.Author.UserName);
+                if (author is null)
+                {
+                    author = request.Author.ToAuthor();
+                    await _authorRepository.Save(author);
+                };
+            }
+
+            var updatedNews = request.ToNews(author);
 
             await _repository.Update(updatedNews);
             return _response.SetResult(updatedNews);

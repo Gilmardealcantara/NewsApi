@@ -11,6 +11,11 @@ namespace NewsApi.Application.Validator
             RuleFor(x => x).NotNull();
             RuleFor(x => x.UserName)
                 .NotEmpty()
+                .MaximumLength(255)
+                .EmailAddress();
+
+            RuleFor(x => x.Name)
+                .NotEmpty()
                 .MaximumLength(255);
         }
     }
