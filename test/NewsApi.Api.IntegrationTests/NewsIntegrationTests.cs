@@ -90,5 +90,30 @@ namespace NewsApi.Api.IntegrationTests
             var result = await response.Content.ReadAsAsync<JObject>();
             result.ContainsKey("id");
         }
+
+        [Fact]
+        public async Task PostNews_WhenHaveHmlContent_ReturnNewsWithId()
+        {
+            var html = "<h3>Welcome to the free online <span style=\"background-color: #914c53; color: #ffffff; padding: 0 3px;\">HTML Code Editor</span></h3><p><strong>Compose the content in the source editor on the left and see the preview changing instantly on the right as you're typing.</strong></p><p>Use the bar above the editor to create new HTML elements. Explore the cleaning features, the tag wizard and many other integrated fratures that make web code composing really easy <img src=\"https://htmlcodeeditor.com/images/smiley.png\" alt=\"smiley\" /></p>";
+
+            var payload = new
+            {
+                Title = "Test title",
+                Content = html,
+                Author = new
+                {
+                    userName = "gilmardealcantara@gmail.com",
+                    name = "Gilmar de Alcantara",
+                }
+            };
+            var token = TokenFactory.GetToken(_applicationConfig.Authorization);
+
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, token);
+            var response = await _client.PostAsJsonAsync("/news", payload);
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            var result = await response.Content.ReadAsAsync<JObject>();
+            result.Should().ContainKey("id");
+            result.Should().Contain("content", html);
+        }
     }
 }
