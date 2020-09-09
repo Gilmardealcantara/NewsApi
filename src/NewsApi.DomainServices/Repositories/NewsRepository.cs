@@ -57,7 +57,7 @@ namespace NewsApi.DomainServices.Repositories
             WHERE n.NewsId=@id";
 
             var newsQueryResult = await _dbConnection.QueryFirstOrDefaultAsync(newsQuery, new { id = id });
-            var news = new News(
+            var news = newsQueryResult is null ? null : new News(
                 (Guid)newsQueryResult.Id,
                 newsQueryResult.Title,
                 newsQueryResult.Content,

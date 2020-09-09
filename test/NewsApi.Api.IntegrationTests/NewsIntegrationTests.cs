@@ -41,12 +41,19 @@ namespace NewsApi.Api.IntegrationTests
                 .And.ContainKey("title")
                 .And.ContainKey("content")
                 .And.ContainKey("comments")
-                .And.Contain("numComments", 5)
-            ;
+                .And.Contain("numComments", 5);
+
             data["comments"].ToObject<JArray>()
                 .Should().NotBeNullOrEmpty()
                 .And.NotContainNulls(x => x["text"].ToString())
                 .And.NotContainNulls(x => x["author"].ToString());
+        }
+
+        [Fact]
+        public async Task GetNewsByIdWhenNewsNotExists_ReturnBadNoContent()
+        {
+            var response = await _client.GetAsync("/news/3b2c1964-cdd4-423e-9919-c22bd8182dd1");
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
     }
 }
