@@ -4,6 +4,18 @@
 docker-compose down -v --rmi all --remove-orphans
 docker-compose up --build --abort-on-container-exit
 
+dotnet test --logger "console;verbosity=detailed"
+
+cd test/NewsApi.Application.Tests/
+generate-coverate.sh 
+
+cd test/NewsApi.Api.IntegrationTests/
+generate-coverate.sh 
+
+code coverate
+
+
+
 - A Notícia deverá conter:
     - título
     - Conteúdo
