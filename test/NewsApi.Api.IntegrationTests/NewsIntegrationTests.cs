@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Testing;
-using NewsApi.Api.Configurations;
 using NewsApi.Application.Dtos;
 using Newtonsoft.Json.Linq;
 using Xunit;

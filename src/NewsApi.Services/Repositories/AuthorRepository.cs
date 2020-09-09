@@ -6,7 +6,7 @@ using NewsApi.Application.Entities;
 using NewsApi.Application.Services.Repositories;
 using Newtonsoft.Json;
 
-namespace NewsApi.DomainServices.Repositories
+namespace NewsApi.Services.Repositories
 {
     public class AuthorRepository : IAuthorRepository
     {

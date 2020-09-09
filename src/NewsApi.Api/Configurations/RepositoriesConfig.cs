@@ -2,7 +2,7 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using NewsApi.Application.Services.Repositories;
-using NewsApi.DomainServices.Repositories;
+using NewsApi.Services.Repositories;
 
 namespace NewsApi.Api.Configurations
 {
