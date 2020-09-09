@@ -23,7 +23,7 @@ namespace NewsApi.Application.Tests.UseCases
                     Guid.NewGuid(),
                     f.Lorem.Sentence(3),
                     f.Lorem.Paragraphs(3),
-                    new Author(f.Person.UserName)
+                    new Author(f.Person.UserName, f.Person.FullName)
                 ))
                 .RuleFor(n => n.ThumbnailURL, (f, n) => $"https://s3.amazonaws.com/bucketname/{n.Id}.png")
                 .Generate();
@@ -55,12 +55,12 @@ namespace NewsApi.Application.Tests.UseCases
                     Guid.NewGuid(),
                     f.Lorem.Sentence(3),
                     f.Lorem.Paragraphs(3),
-                    new Author(f.Person.UserName)))
+                    new Author(f.Person.UserName, f.Person.FullName)))
                 .Generate();
 
 
             var fakeComments = new Faker<Comment>()
-                .CustomInstantiator(f => new Comment(f.Lorem.Paragraph(), new Author(f.Person.UserName)))
+                .CustomInstantiator(f => new Comment(f.Lorem.Paragraph(), new Author(f.Person.UserName, f.Person.FullName)))
                 .Generate(10);
 
             var logger = new Mock<ILogger<GetNewsByIdUseCase>>().Object;

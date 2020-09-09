@@ -8,6 +8,15 @@ namespace NewsApi.Application.Validator
         public CreateNewsRequestValidator()
         {
             RuleFor(x => x).NotNull();
+            RuleFor(x => x.Title)
+                .NotEmpty()
+                .MaximumLength(255);
+
+            RuleFor(x => x.Content)
+                .NotEmpty();
+
+            RuleFor(x => x.Author)
+                .SetValidator(new AuthorRequestValidator());
         }
     }
 }

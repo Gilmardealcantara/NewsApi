@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using NewsApi.Application.Dtos;
 using NewsApi.Application.Entities;
-using NewsApi.Application.Services.ExternalApis;
 using NewsApi.Application.Services.Repositories;
 using NewsApi.Application.Shared;
 using NewsApi.Application.Tests.Validadors;

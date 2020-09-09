@@ -27,7 +27,7 @@ namespace NewsApi.Application.Tests.UseCases
                     Guid.NewGuid(),
                     f.Lorem.Sentence(3),
                     f.Lorem.Letter(contentSize),
-                    new Author(f.Person.UserName)
+                    new Author(f.Person.UserName, f.Person.FullName)
                 ))
                 .RuleFor(n => n.ThumbnailURL, (f, n) => $"https://s3.amazonaws.com/bucketname/{n.Id}.png")
                 .Generate(10);

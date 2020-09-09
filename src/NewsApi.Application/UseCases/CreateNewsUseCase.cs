@@ -5,25 +5,34 @@ using NewsApi.Application.Dtos;
 using NewsApi.Application.Entities;
 using NewsApi.Application.Services.Repositories;
 using NewsApi.Application.Shared;
-using NewsApi.Application.Services.ExternalApis;
 using NewsApi.Application.UseCases.Interfaces;
 
 namespace NewsApi.Application.UseCases
 {
     public class CreateNewsUseCase : UseCaseBase<CreateNewsRequest, News>, ICreateNewsUseCase
     {
-        INewsRepository _repository;
+        private readonly INewsRepository _newsRepository;
+        private readonly IAuthorRepository _authorRepository;
         public CreateNewsUseCase(
             ILogger<CreateNewsUseCase> logger,
             IValidator<CreateNewsRequest> validator,
-            INewsRepository repository)
+            INewsRepository newsRepository,
+            IAuthorRepository authorRepository)
             : base(logger, validator, ("01", "Error unexpected when create news"))
-           => _repository = repository;
+           => (_newsRepository, _authorRepository) = (newsRepository, authorRepository);
 
         protected override async Task<UseCaseResponse<News>> OnExecute(CreateNewsRequest request)
         {
-            var news = request.ToNews();
-            await _repository.Save(news);
+            var author = await _authorRepository.GeyByUserName(request.Author.UserName);
+            if (author is null)
+            {
+                author = request.Author.ToAuthor();
+                await _authorRepository.Save(author);
+            };
+
+            var news = request.ToNews(author);
+
+            await _newsRepository.Save(news);
             return _response.SetResult(news);
         }
     }
