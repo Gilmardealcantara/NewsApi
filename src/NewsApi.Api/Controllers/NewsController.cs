@@ -33,9 +33,6 @@ namespace NewsApi.Api.Controllers
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromServices] IUpdateNewsUseCase useCase, Guid id, UpdateNewsRequest request)
-        {
-            request.Id = id;
-            return UseCaseResponseToActionResult.Converter(await useCase.Execute(request));
-        }
+            => UseCaseResponseToActionResult.Converter(await useCase.Execute(request.WithId(id)));
     }
 }
