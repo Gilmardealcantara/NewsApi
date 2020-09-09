@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using Dapper;
 using NewsApi.Application.Entities;
 using NewsApi.Application.Services.Repositories;
-using Newtonsoft.Json;
 
 namespace NewsApi.Services.Repositories
 {
-    public class NewsRepository : INewsRepository
+
+    public partial class NewsRepository : INewsRepository
     {
         private readonly IDbConnection _dbConnection;
 
