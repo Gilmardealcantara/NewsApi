@@ -1,14 +1,13 @@
-using System;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Testing;
 using NewsApi.Api.Configurations;
 using NewsApi.Application.Dtos;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Xunit;
 
@@ -84,13 +83,12 @@ namespace NewsApi.Api.IntegrationTests
                 }
             };
             var token = TokenFactory.GetToken(_applicationConfig.Authorization);
-            Console.WriteLine("\n TOKEN");
-            Console.WriteLine(token);
-            Console.WriteLine("TOKEN\n");
 
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, token);
             var response = await _client.PostAsJsonAsync("/news", payload);
-            response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            var result = await response.Content.ReadAsAsync<JObject>();
+            result.ContainsKey("id");
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Dapper;
 using NewsApi.Application.Entities;
 using NewsApi.Application.Services.Repositories;
+using Newtonsoft.Json;
 
 namespace NewsApi.DomainServices.Repositories
 {
@@ -80,20 +81,27 @@ namespace NewsApi.DomainServices.Repositories
                 ,c.[AuthorId] Author_Id
                 ,a.UserName Author_UserName
             FROM [Comments] c
-            JOIN Authors a ON c.AuthorId = c.AuthorId
+            JOIN Authors a ON c.AuthorId = a.AuthorId
             Where NewsId = @id";
 
             return (await _dbConnection.QueryAsync(sql, new { id, limit }))
                 .Select(f => new Comment(f.Text, new Author((Guid)f.Author_Id, f.Author_UserName, f.Author_Name)));
         }
 
-        public Task Save(News news)
+        public async Task Save(News news)
         {
-            throw new NotImplementedException();
+            var keys = "(NewsId, Title, Content, AuthorId)";
+            var values = "(@NewsId, @Title, @Content, @AuthorId)";
+            var comand = $"INSERT INTO News {keys} values {values}";
+
+            var parameters = new { news.Title, news.Content, NewsId = news.Id, AuthorId = news.Author.Id };
+            await _dbConnection.ExecuteAsync(comand, parameters);
         }
 
         public Task Update(News news)
         {
+            Console.WriteLine(JsonConvert.SerializeObject(news, Formatting.Indented));
+
             throw new NotImplementedException();
         }
     }
