@@ -1,5 +1,7 @@
 # News API
 
+docker-compose up
+
 - A Notícia deverá conter:
     - título
     - Conteúdo

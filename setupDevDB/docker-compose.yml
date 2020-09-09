@@ -11,4 +11,4 @@ services:
       - SA_PASSWORD=Senha@123
       - MSSQL_PID=Developer
     ports:
-      - "1433:1433"
+      - "1435:1433"
