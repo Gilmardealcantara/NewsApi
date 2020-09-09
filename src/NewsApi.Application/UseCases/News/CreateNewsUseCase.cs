@@ -7,9 +7,9 @@ using NewsApi.Application.Services.Repositories;
 using NewsApi.Application.Shared;
 using NewsApi.Application.UseCases.Interfaces;
 
-namespace NewsApi.Application.UseCases
+namespace NewsApi.Application.UseCases.News
 {
-    public class CreateNewsUseCase : UseCaseBase<CreateNewsRequest, News>, ICreateNewsUseCase
+    public class CreateNewsUseCase : UseCaseBase<CreateNewsRequest, Entities.News>, ICreateNewsUseCase
     {
         private readonly INewsRepository _newsRepository;
         private readonly IAuthorRepository _authorRepository;
@@ -21,7 +21,7 @@ namespace NewsApi.Application.UseCases
             : base(logger, validator, ("01", "Error unexpected when create news"))
            => (_newsRepository, _authorRepository) = (newsRepository, authorRepository);
 
-        protected override async Task<UseCaseResponse<News>> OnExecute(CreateNewsRequest request)
+        protected override async Task<UseCaseResponse<Entities.News>> OnExecute(CreateNewsRequest request)
         {
             var author = await _authorRepository.GeyByUserName(request.Author.UserName);
             if (author is null)

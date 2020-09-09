@@ -4,7 +4,7 @@ using NewsApi.Application.Shared;
 
 namespace NewsApi.Application.UseCases.Interfaces
 {
-    public interface IUpdateNewsUseCase : IUseCase<UpdateNewsRequest, News>
+    public interface IUpdateNewsUseCase : IUseCase<UpdateNewsRequest, Entities.News>
     {
 
     }

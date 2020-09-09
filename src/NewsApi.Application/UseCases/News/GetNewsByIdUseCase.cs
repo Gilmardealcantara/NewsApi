@@ -8,7 +8,7 @@ using NewsApi.Application.Services.Repositories;
 using NewsApi.Application.Shared;
 using NewsApi.Application.UseCases.Interfaces;
 
-namespace NewsApi.Application.UseCases
+namespace NewsApi.Application.UseCases.News
 {
     public class GetNewsByIdUseCase : UseCaseBase<Guid, NewsResponse>, IGetNewsByIdUseCase
     {

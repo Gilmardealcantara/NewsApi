@@ -9,7 +9,7 @@ using NewsApi.Application.Shared;
 using NewsApi.Application.UseCases.Interfaces;
 using Newtonsoft.Json;
 
-namespace NewsApi.Application.UseCases
+namespace NewsApi.Application.UseCases.News
 {
     public class ListNewsUseCase : UseCaseBase<IEnumerable<NewsListItem>>, IListNewsUseCase
     {

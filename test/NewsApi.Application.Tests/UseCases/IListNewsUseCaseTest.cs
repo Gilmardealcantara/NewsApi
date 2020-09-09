@@ -8,6 +8,7 @@ using NewsApi.Application.Entities;
 using NewsApi.Application.Services.Repositories;
 using NewsApi.Application.Shared;
 using NewsApi.Application.UseCases;
+using NewsApi.Application.UseCases.News;
 using Xunit;
 
 namespace NewsApi.Application.Tests.UseCases

@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
@@ -8,9 +7,9 @@ using NewsApi.Application.Services.Repositories;
 using NewsApi.Application.Shared;
 using NewsApi.Application.UseCases.Interfaces;
 
-namespace NewsApi.Application.UseCases
+namespace NewsApi.Application.UseCases.News
 {
-    public class UpdateNewsUseCase : UseCaseBase<UpdateNewsRequest, News>, IUpdateNewsUseCase
+    public class UpdateNewsUseCase : UseCaseBase<UpdateNewsRequest, Entities.News>, IUpdateNewsUseCase
     {
         private readonly INewsRepository _repository;
         private readonly IAuthorRepository _authorRepository;
@@ -23,7 +22,7 @@ namespace NewsApi.Application.UseCases
             : base(logger, validator, ("03", "Error unexpected when update news"))
            => (_repository, _authorRepository) = (repository, authorRepository);
 
-        protected override async Task<UseCaseResponse<News>> OnExecute(UpdateNewsRequest request)
+        protected override async Task<UseCaseResponse<Entities.News>> OnExecute(UpdateNewsRequest request)
         {
             var oldNews = await _repository.GetById(request.Id);
             if (oldNews is null)
