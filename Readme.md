@@ -1,6 +1,8 @@
 # News API
 
-docker-compose up
+
+docker-compose down -v --rmi all --remove-orphans
+docker-compose up --build --abort-on-container-exit
 
 - A Notícia deverá conter:
     - título

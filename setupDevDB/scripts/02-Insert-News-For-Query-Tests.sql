@@ -1,3 +1,4 @@
+-- for query tests
 declare @authorId UNIQUEIDENTIFIER = '87549312-b134-423b-9b18-4c97a06deb3a';
 declare @newsId UNIQUEIDENTIFIER = '3b2c1964-cdd4-423e-9919-c22bd8182dd9';
 
@@ -13,3 +14,5 @@ values (NEWID(), 'Legal', @authorId, @newsId),
 (NEWID(), 'Muito Bom', @authorId, @newsId),
 (NEWID(), 'First', @authorId, @newsId),
 (NEWID(), 'hahahahha rrsrs', @authorId, @newsId);
+
+

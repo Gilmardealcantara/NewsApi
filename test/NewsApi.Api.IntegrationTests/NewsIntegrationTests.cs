@@ -1,7 +1,6 @@
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -114,6 +113,29 @@ namespace NewsApi.Api.IntegrationTests
             var result = await response.Content.ReadAsAsync<JObject>();
             result.Should().ContainKey("id");
             result.Should().Contain("content", html);
+        }
+
+
+        [Fact]
+        public async Task UpdateNews_WhenOk_ReturnUpdatedNews()
+        {
+            var payload = new
+            {
+                Title = "Test title",
+                Content = "Test Content",
+                Author = new
+                {
+                    userName = "gilmardealcantara@gmail.com",
+                    name = "Gilmar de Alcantara",
+                }
+            };
+            var token = TokenFactory.GetToken(_applicationConfig.Authorization);
+
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, token);
+            var response = await _client.PostAsJsonAsync("/news", payload);
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            var result = await response.Content.ReadAsAsync<JObject>();
+            result.ContainsKey("id");
         }
     }
 }

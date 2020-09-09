@@ -28,7 +28,8 @@ for file in $(ls ./scripts/*.sql); do
 done
 
 echo -e "\n***Seed Data***"
-/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Senha@123 -d ${DB_NAME} -i ./scripts/02-Insert-News.sql
+/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Senha@123 -d ${DB_NAME} -i ./scripts/02-Insert-News-For-Query-Tests.sql
+/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Senha@123 -d ${DB_NAME} -i ./scripts/03-Insert-News-For-Commands-Tests.sql
 
 
 echo -e "***DB SETUP DONE '${DB_NAME}' !!!***\n"
