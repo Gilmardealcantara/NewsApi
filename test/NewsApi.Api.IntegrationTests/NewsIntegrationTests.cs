@@ -19,7 +19,7 @@ namespace NewsApi.Api.IntegrationTests
             => _client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
 
         [Fact]
-        public async Task GetNews_ReturnSuccess()
+        public async Task GetNews_WhenOk_ReturnSuccess()
         {
             var response = await _client.GetAsync("/news");
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -31,7 +31,7 @@ namespace NewsApi.Api.IntegrationTests
         }
 
         [Fact]
-        public async Task GetNewsById_ReturnSuccess()
+        public async Task GetNewsById_whenOk_ReturnSuccess()
         {
             var response = await _client.GetAsync("/news/3b2c1964-cdd4-423e-9919-c22bd8182dd9");
             response.StatusCode.Should().Be(HttpStatusCode.OK);
@@ -50,7 +50,7 @@ namespace NewsApi.Api.IntegrationTests
         }
 
         [Fact]
-        public async Task GetNewsByIdWhenNewsNotExists_ReturnBadNoContent()
+        public async Task GetNewsById_WhenNewsNotExists_ReturnBadNoContent()
         {
             var response = await _client.GetAsync("/news/3b2c1964-cdd4-423e-9919-c22bd8182dd1");
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
