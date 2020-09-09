@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Testing;
+using NewsApi.Api.Configurations;
 using NewsApi.Application.Dtos;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -13,12 +14,16 @@ using Xunit;
 
 namespace NewsApi.Api.IntegrationTests
 {
-    public class NewsIntegrationTests : IClassFixture<WebApplicationFactory<Startup>>
+    public class NewsIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
+        private readonly ApplicationConfig _applicationConfig;
         private readonly HttpClient _client;
 
-        public NewsIntegrationTests(WebApplicationFactory<Startup> factory)
-            => _client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+        public NewsIntegrationTests(CustomWebApplicationFactory<Startup> factory)
+        {
+            _applicationConfig = factory.ApplicationConfig;
+            _client = factory.CreateClient(new WebApplicationFactoryClientOptions { AllowAutoRedirect = false });
+        }
 
         [Fact]
         public async Task GetNews_WhenOk_ReturnSuccess()
@@ -78,7 +83,7 @@ namespace NewsApi.Api.IntegrationTests
                     name = "Gilmar de Alcantara",
                 }
             };
-            var token = TokenFactory.GetToken();
+            var token = TokenFactory.GetToken(_applicationConfig.Authorization);
             Console.WriteLine("\n TOKEN");
             Console.WriteLine(token);
             Console.WriteLine("TOKEN\n");

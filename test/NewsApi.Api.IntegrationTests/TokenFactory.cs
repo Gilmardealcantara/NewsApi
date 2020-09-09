@@ -9,11 +9,9 @@ namespace NewsApi.Api.IntegrationTests
 {
     public static class TokenFactory
     {
-        public static string GetToken()
+        public static string GetToken(NewsApi.Api.Configurations.Authorization auth)
         {
-            string secret = "db3OIsj+BXE9NZDy0t8W3TcNekrF+2d/1sFnWG4HnV8TZY30iTOdtVWJG8abWvB1GlOgJuQZdcF2Luqm/hccMw==";
-
-            var securityKey = new SymmetricSecurityKey(Encoding.Default.GetBytes(secret));
+            var securityKey = new SymmetricSecurityKey(Encoding.Default.GetBytes(auth.SecretKey));
 
             var signingCredentials = new SigningCredentials(
                 securityKey,
