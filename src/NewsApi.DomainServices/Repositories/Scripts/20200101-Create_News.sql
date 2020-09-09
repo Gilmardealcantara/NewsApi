@@ -1,6 +1,7 @@
 Create TABLE Authors (
     AuthorId UNIQUEIDENTIFIER NOT NULL,
     UserName VARCHAR(255),
+    [Name] VARCHAR(255),
     PRIMARY KEY(AuthorId)
 );
 GO

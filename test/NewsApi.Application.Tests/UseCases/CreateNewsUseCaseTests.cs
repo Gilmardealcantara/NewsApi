@@ -9,7 +9,6 @@ using NewsApi.Application.UseCases;
 using Xunit;
 using Bogus;
 using NewsApi.Application.Tests.Validadors;
-using NewsApi.Application.Services.ExternalApis;
 
 namespace NewsApi.Application.Tests.UseCases
 {

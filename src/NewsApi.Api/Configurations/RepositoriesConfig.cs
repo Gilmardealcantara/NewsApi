@@ -12,6 +12,7 @@ namespace NewsApi.Api.Configurations
         {
             services.AddTransient<IDbConnection>((sp) => new SqlConnection(config.Database.ConnectionString));
             services.AddScoped<INewsRepository, NewsRepository>();
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
         }
     }
 }

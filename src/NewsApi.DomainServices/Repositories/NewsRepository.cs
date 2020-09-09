@@ -29,14 +29,15 @@ namespace NewsApi.DomainServices.Repositories
                 n.[Content],
                 n.[ThumbnailURL],
                 n.[AuthorId] Author_Id, 
-                a.[UserName] Author_UserName
+                a.[UserName] Author_UserName,
+                a.[Name] Author_Name
             FROM [News] n 
             JOIN Authors a ON n.AuthorId = a.AuthorId;";
 
             return (await _dbConnection.QueryAsync(sql))
                 .Select(f => new News(
                     (Guid)f.Id, f.Title, f.Content,
-                    new Author(f.Author_Id, f.Author_UserName))
+                    new Author((Guid)f.Author_Id, (string)f.Author_UserName, (string)f.Author_Name))
                 {
                     ThumbnailURL = f.ThumbnailURL
                 });
@@ -51,7 +52,8 @@ namespace NewsApi.DomainServices.Repositories
                 n.[Content],
                 n.[ThumbnailURL],
                 n.[AuthorId] Author_Id, 
-                a.[UserName] Author_UserName
+                a.[UserName] Author_UserName,
+                a.[Name] Author_Name
             FROM [News] n 
             JOIN Authors a ON n.AuthorId = a.AuthorId
             WHERE n.NewsId=@id";
@@ -61,7 +63,7 @@ namespace NewsApi.DomainServices.Repositories
                 (Guid)newsQueryResult.Id,
                 newsQueryResult.Title,
                 newsQueryResult.Content,
-                new Author(newsQueryResult.Author_Id, newsQueryResult.Author_UserName))
+                new Author((Guid)newsQueryResult.Author_Id, (string)newsQueryResult.Author_UserName, (string)newsQueryResult.Author_Name))
             {
                 ThumbnailURL = newsQueryResult.ThumbnailURL
             };
@@ -82,7 +84,7 @@ namespace NewsApi.DomainServices.Repositories
             Where NewsId = @id";
 
             return (await _dbConnection.QueryAsync(sql, new { id, limit }))
-                .Select(f => new Comment(f.Text, new Author(f.Author_Id, f.Author_UserName)));
+                .Select(f => new Comment(f.Text, new Author((Guid)f.Author_Id, f.Author_UserName, f.Author_Name)));
         }
 
         public Task Save(News news)

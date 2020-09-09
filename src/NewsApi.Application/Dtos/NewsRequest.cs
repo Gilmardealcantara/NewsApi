@@ -8,6 +8,7 @@ namespace NewsApi.Application.Dtos
     {
         public string Title { get; set; }
         public string Content { get; set; }
+        [JsonIgnore]
         public AuthorRequest Author { get; set; }
         public News ToNews(Author author) => new News(Title, Content, author);
     }
@@ -18,6 +19,7 @@ namespace NewsApi.Application.Dtos
         public Guid Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
+        [JsonIgnore]
         public AuthorRequest Author { get; set; }
         public News ToNews(Author author)
             => new News(this.Id, Title, Content, author);

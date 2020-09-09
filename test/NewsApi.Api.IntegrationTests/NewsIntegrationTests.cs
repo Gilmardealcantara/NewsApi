@@ -55,5 +55,24 @@ namespace NewsApi.Api.IntegrationTests
             var response = await _client.GetAsync("/news/3b2c1964-cdd4-423e-9919-c22bd8182dd1");
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
+
+
+        // [Fact]
+        // public async Task PostNews_WhenOk_ReturnNewsWithId()
+        // {
+        //     var payload = new
+        //     {
+        //         Title = "Test title",
+        //         Content = "Test Content",
+        //         Author = new
+        //         {
+        //             userName = "gilmardealcantara@gmail.com",
+        //             name = "Gilmar de Alcantara",
+        //         }
+        //     };
+
+        //     var response = await _client.PostAsJsonAsync("/news", payload);
+        //     response.StatusCode.Should().Be(HttpStatusCode.Created);
+        // }
     }
 }
