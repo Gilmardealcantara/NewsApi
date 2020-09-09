@@ -13,7 +13,7 @@ using Xunit;
 
 namespace NewsApi.Application.Tests.UseCases.News
 {
-    public class UpdateNewsUseCaseTest
+    public class UpdateNewsUseCaseTests
     {
 
         [Fact]

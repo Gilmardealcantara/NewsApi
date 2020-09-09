@@ -13,7 +13,7 @@ using Xunit;
 
 namespace NewsApi.Application.Tests.UseCases.News
 {
-    public class GetNewsByIdUseCaseTest
+    public class GetNewsByIdUseCaseTests
     {
         [Fact]
         public async Task UseCase_WhenOk_ResultNewsWithIdTitleAndContent()

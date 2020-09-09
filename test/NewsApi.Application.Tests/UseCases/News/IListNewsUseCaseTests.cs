@@ -12,7 +12,7 @@ using Xunit;
 
 namespace NewsApi.Application.Tests.UseCases.News
 {
-    public class IListNewsUseCaseTest
+    public class IListNewsUseCaseTests
     {
         [Theory]
         [InlineData(100)]

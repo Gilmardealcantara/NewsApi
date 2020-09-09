@@ -1,6 +1,5 @@
 using FluentValidation;
 using NewsApi.Application.Dtos;
-using NewsApi.Application.Entities;
 
 namespace NewsApi.Application.Validator
 {
