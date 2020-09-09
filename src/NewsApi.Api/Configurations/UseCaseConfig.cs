@@ -10,7 +10,7 @@ namespace NewsApi.Api.Configurations
         {
             services.AddTransient<IListNewsUseCase, ListNewsUseCase>();
             services.AddTransient<IGetNewsByIdUseCase, GetNewsByIdUseCase>();
-            // services.AddTransient<ICreateNewsUseCase, CreateNewsUseCase>();
+            services.AddTransient<ICreateNewsUseCase, CreateNewsUseCase>();
             // services.AddTransient<IUpdateNewsUseCase, UpdateNewsUseCase>();
         }
     }
