@@ -30,7 +30,7 @@ namespace NewsApi.Application.Tests.UseCases.News
                 .Generate();
 
             var logger = new Mock<ILogger<CreateNewsUseCase>>().Object;
-            var validator = ValidatorsFactory.GetValidValidator<CreateNewsRequest>();
+            var validator = ValidatorFactory.GetValidValidator<CreateNewsRequest>();
 
             var repositoryMock = new Mock<INewsRepository>();
 
@@ -71,7 +71,7 @@ namespace NewsApi.Application.Tests.UseCases.News
                 .Generate();
 
             var logger = new Mock<ILogger<CreateNewsUseCase>>().Object;
-            var validator = ValidatorsFactory.GetValidValidator<CreateNewsRequest>();
+            var validator = ValidatorFactory.GetValidValidator<CreateNewsRequest>();
 
             var repositoryMock = new Mock<INewsRepository>();
             var authorRepositoryMock = new Mock<IAuthorRepository>();

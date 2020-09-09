@@ -16,10 +16,10 @@ namespace NewsApi.Application.UseCases.Comments
         private readonly INewsRepository _newsRepository;
 
         public AddNewsCommentUseCase(
-            IAuthorRepository authorRepository,
-            INewsRepository newsRepository,
             ILogger<UseCaseBase<CreateCommentRequest, Guid>> logger,
-            IValidator<CreateCommentRequest> validator)
+            IValidator<CreateCommentRequest> validator,
+            IAuthorRepository authorRepository,
+            INewsRepository newsRepository)
             : base(logger, validator, ("05", "Error unexpected when add comment int news"))
         {
             _authorRepository = authorRepository;

@@ -29,7 +29,7 @@ namespace NewsApi.Application.Tests.UseCases.News
                 .Generate();
 
             var logger = new Mock<ILogger<GetNewsByIdUseCase>>().Object;
-            var validator = ValidatorsFactory.GetValidValidator<Guid>();
+            var validator = ValidatorFactory.GetValidValidator<Guid>();
 
             var repositoryMock = new Mock<INewsRepository>();
             repositoryMock.Setup(r => r.GetById(fakeNews.Id))
@@ -64,7 +64,7 @@ namespace NewsApi.Application.Tests.UseCases.News
                 .Generate(10);
 
             var logger = new Mock<ILogger<GetNewsByIdUseCase>>().Object;
-            var validator = ValidatorsFactory.GetValidValidator<Guid>();
+            var validator = ValidatorFactory.GetValidValidator<Guid>();
 
             var repositoryMock = new Mock<INewsRepository>();
             repositoryMock.Setup(r => r.GetById(fakeNews.Id)).ReturnsAsync(fakeNews);
@@ -85,7 +85,7 @@ namespace NewsApi.Application.Tests.UseCases.News
 
             var personId = Guid.NewGuid();
             var logger = new Mock<ILogger<GetNewsByIdUseCase>>().Object;
-            var validator = ValidatorsFactory.GetValidValidator<Guid>();
+            var validator = ValidatorFactory.GetValidValidator<Guid>();
 
             var repositoryMock = new Mock<INewsRepository>();
             repositoryMock.Setup(r => r.GetById(personId))

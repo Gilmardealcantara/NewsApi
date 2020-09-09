@@ -5,7 +5,7 @@ using Moq;
 
 namespace NewsApi.Application.Tests.Validadors
 {
-    public static class ValidatorsFactory
+    public static class ValidatorFactory
     {
         public static IValidator<T> GetValidValidator<T>()
         {

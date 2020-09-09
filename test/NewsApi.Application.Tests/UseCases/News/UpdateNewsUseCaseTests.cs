@@ -34,7 +34,7 @@ namespace NewsApi.Application.Tests.UseCases.News
             };
 
             var logger = new Mock<ILogger<UpdateNewsUseCase>>().Object;
-            var validator = ValidatorsFactory.GetValidValidator<UpdateNewsRequest>();
+            var validator = ValidatorFactory.GetValidValidator<UpdateNewsRequest>();
 
             var newsRepositoryMock = new Mock<INewsRepository>();
             newsRepositoryMock.Setup(r => r.GetById(fakeRequest.Id)).ReturnsAsync(oldNews);
@@ -72,7 +72,7 @@ namespace NewsApi.Application.Tests.UseCases.News
             };
 
             var logger = new Mock<ILogger<UpdateNewsUseCase>>().Object;
-            var validator = ValidatorsFactory.GetValidValidator<UpdateNewsRequest>();
+            var validator = ValidatorFactory.GetValidValidator<UpdateNewsRequest>();
 
             var newsRepositoryMock = new Mock<INewsRepository>();
             newsRepositoryMock.Setup(r => r.GetById(fakeRequest.Id)).ReturnsAsync(oldNews);
@@ -110,7 +110,7 @@ namespace NewsApi.Application.Tests.UseCases.News
             };
 
             var logger = new Mock<ILogger<UpdateNewsUseCase>>().Object;
-            var validator = ValidatorsFactory.GetValidValidator<UpdateNewsRequest>();
+            var validator = ValidatorFactory.GetValidValidator<UpdateNewsRequest>();
 
             var newsRepositoryMock = new Mock<INewsRepository>();
             newsRepositoryMock.Setup(r => r.GetById(fakeRequest.Id)).ReturnsAsync(oldNews);
@@ -145,7 +145,7 @@ namespace NewsApi.Application.Tests.UseCases.News
             };
 
             var logger = new Mock<ILogger<UpdateNewsUseCase>>().Object;
-            var validator = ValidatorsFactory.GetValidValidator<UpdateNewsRequest>();
+            var validator = ValidatorFactory.GetValidValidator<UpdateNewsRequest>();
 
             var repositorymock = new Mock<INewsRepository>();
             var authorRepositoryMock = new Mock<IAuthorRepository>();
