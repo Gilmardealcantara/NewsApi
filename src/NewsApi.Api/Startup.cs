@@ -1,9 +1,14 @@
+using System;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using NewsApi.Api.Configurations;
 
 namespace NewsApi.Api
@@ -26,10 +31,10 @@ namespace NewsApi.Api
             services.ConfigureValidator();
             services.ConfigureUseCase();
             services.ConfigureRepository(appConfig);
+            services.ConfigureAuthorization(appConfig);
 
             services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);
             services.AddResponseCompression(options => options.Providers.Add<GzipCompressionProvider>());
-
 
             services.AddControllers().AddNewtonsoftJson(options =>
             {
@@ -52,6 +57,7 @@ namespace NewsApi.Api
 
             app.UseSwaggerExtension();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

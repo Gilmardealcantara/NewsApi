@@ -1,8 +1,10 @@
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Testing;
 using NewsApi.Application.Dtos;
 using Newtonsoft.Json;
@@ -56,23 +58,34 @@ namespace NewsApi.Api.IntegrationTests
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
+        [Fact]
+        public async Task PostNews_WhenNotHaveAToken_ReturnUnauthorized()
+        {
+            var response = await _client.PostAsJsonAsync("/news", new { });
+            response.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
+        }
 
-        // [Fact]
-        // public async Task PostNews_WhenOk_ReturnNewsWithId()
-        // {
-        //     var payload = new
-        //     {
-        //         Title = "Test title",
-        //         Content = "Test Content",
-        //         Author = new
-        //         {
-        //             userName = "gilmardealcantara@gmail.com",
-        //             name = "Gilmar de Alcantara",
-        //         }
-        //     };
+        [Fact]
+        public async Task PostNews_WhenOk_ReturnNewsWithId()
+        {
+            var payload = new
+            {
+                Title = "Test title",
+                Content = "Test Content",
+                Author = new
+                {
+                    userName = "gilmardealcantara@gmail.com",
+                    name = "Gilmar de Alcantara",
+                }
+            };
+            var token = TokenFactory.GetToken();
+            Console.WriteLine("\n TOKEN");
+            Console.WriteLine(token);
+            Console.WriteLine("TOKEN\n");
 
-        //     var response = await _client.PostAsJsonAsync("/news", payload);
-        //     response.StatusCode.Should().Be(HttpStatusCode.Created);
-        // }
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, token);
+            var response = await _client.PostAsJsonAsync("/news", payload);
+            response.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
+        }
     }
 }

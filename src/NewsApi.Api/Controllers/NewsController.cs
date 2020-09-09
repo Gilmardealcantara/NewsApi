@@ -30,7 +30,7 @@ namespace NewsApi.Api.Controllers
         public async Task<IActionResult> GetById([FromServices] IGetNewsByIdUseCase useCase, Guid id)
             => UseCaseResponseToActionResult.Converter(await useCase.Execute(id));
 
-        [HttpPost]
+        [HttpPost, Authorize]
         public async Task<IActionResult> Post([FromServices] ICreateNewsUseCase useCase, CreateNewsRequest request)
         {
             var userName = this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
