@@ -19,6 +19,18 @@ namespace NewsApi.Application.Tests.Builders
             _instance = new News(id, "Breaking News", "Any thing intresting", author);
         }
 
+        public NewsBuilder WithThumbnailURL(string url)
+        {
+            _instance.ThumbnailURL = url;
+            return this;
+        }
+
+        public NewsBuilder WithComments(Comment[] comments)
+        {
+            _instance.Comments = comments;
+            return this;
+        }
+
         public Entities.News Build() => _instance;
     }
 }

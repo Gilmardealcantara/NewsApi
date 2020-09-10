@@ -10,6 +10,7 @@ using Xunit;
 using Bogus;
 using NewsApi.Application.Tests.Validadors;
 using NewsApi.Application.UseCases.News;
+using NewsApi.Application.Tests.Builders;
 
 namespace NewsApi.Application.Tests.UseCases.News
 {
@@ -19,15 +20,7 @@ namespace NewsApi.Application.Tests.UseCases.News
         public async Task UseCase_WhenAuthorExists_ReturnSuccess()
         {
             //Given
-            var request = new Faker<CreateNewsRequest>()
-                .RuleFor(x => x.Title, f => f.Lorem.Sentence(3))
-                .RuleFor(x => x.Content, f => f.Lorem.Paragraphs())
-                .Generate();
-
-            request.Author = new Faker<AuthorRequest>()
-                .RuleFor(x => x.Name, f => f.Person.FullName)
-                .RuleFor(x => x.UserName, f => f.Person.Email)
-                .Generate();
+            var request = new NewsRequestBuilder().BuildCreate();
 
             var logger = new Mock<ILogger<CreateNewsUseCase>>().Object;
             var validator = ValidatorFactory.GetValidValidator<CreateNewsRequest>();
@@ -60,15 +53,7 @@ namespace NewsApi.Application.Tests.UseCases.News
         public async Task UseCase_WhenAuthorNotExists_ReturnSuccessAndCreateAuthor()
         {
             //Given
-            var request = new Faker<CreateNewsRequest>()
-                .RuleFor(x => x.Title, f => f.Lorem.Sentence(3))
-                .RuleFor(x => x.Content, f => f.Lorem.Paragraphs())
-                .Generate();
-
-            request.Author = new Faker<AuthorRequest>()
-                .RuleFor(x => x.Name, f => f.Person.FullName)
-                .RuleFor(x => x.UserName, f => f.Person.Email)
-                .Generate();
+            var request = new NewsRequestBuilder().BuildCreate();
 
             var logger = new Mock<ILogger<CreateNewsUseCase>>().Object;
             var validator = ValidatorFactory.GetValidValidator<CreateNewsRequest>();

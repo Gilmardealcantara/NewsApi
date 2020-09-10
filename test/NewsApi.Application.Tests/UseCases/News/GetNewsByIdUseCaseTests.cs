@@ -7,6 +7,7 @@ using Moq;
 using NewsApi.Application.Entities;
 using NewsApi.Application.Services.Repositories;
 using NewsApi.Application.Shared;
+using NewsApi.Application.Tests.Builders;
 using NewsApi.Application.Tests.Validadors;
 using NewsApi.Application.UseCases.News;
 using Xunit;
@@ -18,15 +19,9 @@ namespace NewsApi.Application.Tests.UseCases.News
         [Fact]
         public async Task UseCase_WhenOk_ResultNewsWithIdTitleAndContent()
         {
-            var fakeNews = new Faker<Entities.News>()
-                .CustomInstantiator(f => new Entities.News(
-                    Guid.NewGuid(),
-                    f.Lorem.Sentence(3),
-                    f.Lorem.Paragraphs(3),
-                    new Author(f.Person.UserName, f.Person.FullName)
-                ))
-                .RuleFor(n => n.ThumbnailURL, (f, n) => $"https://s3.amazonaws.com/bucketname/{n.Id}.png")
-                .Generate();
+            var fakeNews = new NewsBuilder()
+                .WithThumbnailURL($"https://s3.amazonaws.com/bucketname/name.png")
+                .Build();
 
             var logger = new Mock<ILogger<GetNewsByIdUseCase>>().Object;
             var validator = ValidatorFactory.GetValidValidator<Guid>();
@@ -50,18 +45,13 @@ namespace NewsApi.Application.Tests.UseCases.News
         public async Task UseCase_WhenOk_ResultNewsListOfComments()
         {
             int numCommentByNews = 10;
-            var fakeNews = new Faker<Entities.News>()
-                .CustomInstantiator(f => new Entities.News(
-                    Guid.NewGuid(),
-                    f.Lorem.Sentence(3),
-                    f.Lorem.Paragraphs(3),
-                    new Author(f.Person.UserName, f.Person.FullName)))
-                .Generate();
-
-
             var fakeComments = new Faker<Comment>()
                 .CustomInstantiator(f => new Comment(f.Lorem.Paragraph(), new Author(f.Person.UserName, f.Person.FullName)))
                 .Generate(10);
+
+            var fakeNews = new NewsBuilder()
+                .WithComments(fakeComments.ToArray())
+                .Build();
 
             var logger = new Mock<ILogger<GetNewsByIdUseCase>>().Object;
             var validator = ValidatorFactory.GetValidValidator<Guid>();

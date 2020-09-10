@@ -46,6 +46,12 @@ namespace NewsApi.Application.Tests.Builders
             return this;
         }
 
+        public NewsRequestBuilder WithAuthorUserName(string userName)
+        {
+            _instance.Author.UserName = userName;
+            return this;
+        }
+
         public CreateNewsRequest BuildCreate() => (CreateNewsRequest)_instance;
         public UpdateNewsRequest BuildUpdate() => (UpdateNewsRequest)_instance;
         public NewsRequest Build() => _instance;

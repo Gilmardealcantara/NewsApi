@@ -7,6 +7,7 @@ using NewsApi.Application.Dtos;
 using NewsApi.Application.Entities;
 using NewsApi.Application.Services.Repositories;
 using NewsApi.Application.Shared;
+using NewsApi.Application.Tests.Builders;
 using NewsApi.Application.Tests.Validadors;
 using NewsApi.Application.UseCases.News;
 using Xunit;
@@ -20,18 +21,12 @@ namespace NewsApi.Application.Tests.UseCases.News
         public async Task UseCase_WhenNewsAuthorNotchanged_ReturnUpdatedNews()
         {
 
-            var oldNews = new Entities.News("Test title", "Test Content", new Author("gilmardealcantara@gmail.com", "Gilmar Alcantara"));
-            var fakeRequest = new UpdateNewsRequest
-            {
-                Id = oldNews.Id,
-                Title = "New Title",
-                Content = "News Conttent",
-                Author = new AuthorRequest
-                {
-                    UserName = oldNews.Author.UserName,
-                    Name = oldNews.Author.Name
-                }
-            };
+            var oldNews = new NewsBuilder().Build();
+            var fakeRequest = new NewsRequestBuilder(oldNews.Id)
+                .WithTitle("New Title")
+                .WithContent("New Content")
+                .WithAuthorUserName(oldNews.Author.UserName)
+                .BuildUpdate();
 
             var logger = new Mock<ILogger<UpdateNewsUseCase>>().Object;
             var validator = ValidatorFactory.GetValidValidator<UpdateNewsRequest>();
@@ -58,18 +53,12 @@ namespace NewsApi.Application.Tests.UseCases.News
         public async Task UseCase_WhenNewsAuthorChangedAndExistsInDb_ReturnUpdatedNews()
         {
 
-            var oldNews = new Entities.News("Test title", "Test Content", new Author("gilmardealcantara@gmail.com", "Gilmar Alcantara"));
-            var fakeRequest = new UpdateNewsRequest
-            {
-                Id = oldNews.Id,
-                Title = "New Title",
-                Content = "News Conttent",
-                Author = new AuthorRequest
-                {
-                    UserName = "jose@gmail.com",
-                    Name = "Jose"
-                }
-            };
+            var oldNews = new NewsBuilder().Build();
+            var fakeRequest = new NewsRequestBuilder(oldNews.Id)
+                .WithTitle("New Title")
+                .WithContent("New Content")
+                .WithAuthorUserName("jose@gmail.com")
+                .BuildUpdate();
 
             var logger = new Mock<ILogger<UpdateNewsUseCase>>().Object;
             var validator = ValidatorFactory.GetValidValidator<UpdateNewsRequest>();
@@ -96,18 +85,12 @@ namespace NewsApi.Application.Tests.UseCases.News
         public async Task UseCase_WhenNewsAuthorChangedAndNotExistsInDb_ReturnUpdatedNews()
         {
 
-            var oldNews = new Entities.News("Test title", "Test Content", new Author("gilmardealcantara@gmail.com", "Gilmar Alcantara"));
-            var fakeRequest = new UpdateNewsRequest
-            {
-                Id = oldNews.Id,
-                Title = "New Title",
-                Content = "News Conttent",
-                Author = new AuthorRequest
-                {
-                    UserName = "jose@gmail.com",
-                    Name = "Jose"
-                }
-            };
+            var oldNews = new NewsBuilder().Build();
+            var fakeRequest = new NewsRequestBuilder(oldNews.Id)
+                .WithTitle("New Title")
+                .WithContent("New Content")
+                .WithAuthorUserName("jose@gmail.com")
+                .BuildUpdate();
 
             var logger = new Mock<ILogger<UpdateNewsUseCase>>().Object;
             var validator = ValidatorFactory.GetValidValidator<UpdateNewsRequest>();
@@ -132,17 +115,13 @@ namespace NewsApi.Application.Tests.UseCases.News
         [Fact]
         public async Task UseCase_WhenNewsNotExists_ReturnNotFoundError()
         {
-            var fakeRequest = new UpdateNewsRequest
-            {
-                Id = Guid.NewGuid(),
-                Title = "New Title",
-                Content = "News Conttent",
-                Author = new AuthorRequest
-                {
-                    UserName = "jose@gmail.com",
-                    Name = "Jose"
-                }
-            };
+
+            var oldNews = new NewsBuilder().Build();
+            var fakeRequest = new NewsRequestBuilder(Guid.NewGuid())
+                .WithTitle("New Title")
+                .WithContent("New Content")
+                .WithAuthorUserName("jose@gmail.com")
+                .BuildUpdate();
 
             var logger = new Mock<ILogger<UpdateNewsUseCase>>().Object;
             var validator = ValidatorFactory.GetValidValidator<UpdateNewsRequest>();
