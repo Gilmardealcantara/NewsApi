@@ -6,6 +6,6 @@ namespace NewsApi.Application.Services.ExternalApis
     {
         Task<string> Upload(string keyName, string localPath);
         Task<string> Update(string keyName, string localPath);
-        Task<string> Delete(string keyName);
+        Task Delete(string keyName);
     }
 }

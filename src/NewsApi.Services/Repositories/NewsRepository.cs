@@ -104,10 +104,18 @@ namespace NewsApi.Services.Repositories
             var command = @"UPDATE News 
                 SET Title = @Title,
                 Content = @Content,
+                ThumbnailURL = @ThumbnailURL,
                 AuthorId = @AuthorId
                 WHERE NewsId = @NewsId";
 
-            var parameters = new { news.Title, news.Content, NewsId = news.Id, AuthorId = news.Author.Id };
+            var parameters = new
+            {
+                news.Title,
+                news.Content,
+                news.ThumbnailURL,
+                NewsId = news.Id,
+                AuthorId = news.Author.Id
+            };
             await _connectionFactory.GetConnection().ExecuteAsync(command, parameters);
         }
     }

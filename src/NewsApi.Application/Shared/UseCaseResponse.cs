@@ -29,6 +29,13 @@ namespace NewsApi.Application.Shared
             return this.SetErrors(errors);
         }
 
+        public UseCaseResponse<T> SetResourceNotFountError(string errorCode, string errorMessage)
+        {
+            this.Status = UseCaseResponseStatus.ResourceNotFountError;
+            return this.SetErrors(new ErrorMessage[] { new ErrorMessage(errorCode, errorMessage) });
+        }
+
+
         public UseCaseResponse<T> SetResourceNotFountError(IEnumerable<ErrorMessage> errors = null)
         {
             this.Status = UseCaseResponseStatus.ResourceNotFountError;
