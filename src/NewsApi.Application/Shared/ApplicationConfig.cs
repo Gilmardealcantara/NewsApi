@@ -10,6 +10,7 @@ namespace NewsApi.Application.Shared
 
         public Database Database { get; set; }
         public Authorization Authorization { get; set; }
+        public S3 S3 { get; set; }
     }
 
     public class Database
@@ -20,5 +21,14 @@ namespace NewsApi.Application.Shared
     public class Authorization
     {
         public string SecretKey { get; set; }
+    }
+
+    public class S3
+    {
+        public string AwsAccessKeyId { get; set; }
+        public string AwsSecretAccessKey { get; set; }
+        public string AwsBucketName { get; set; }
+        public string AwsRegionEndpoint { get; set; }
+        public string AwsEndpointUrl { get; set; }
     }
 }

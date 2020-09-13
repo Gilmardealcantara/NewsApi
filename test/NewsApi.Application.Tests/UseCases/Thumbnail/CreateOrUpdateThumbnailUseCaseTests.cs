@@ -58,7 +58,7 @@ namespace NewsApi.Application.Tests.UseCases.Thumbnail
 
             repo.Setup(r => r.GetById(_request.NewsId))
                 .ReturnsAsync(new NewsBuilder(_request.NewsId).Build());
-            imgService.Setup(s => s.Upload(It.IsAny<string>(), _request.FileLocalPath))
+            imgService.Setup(s => s.Save(It.IsAny<string>(), _request.FileLocalPath))
                 .ReturnsAsync((string keyName, string path) => $"http://s3.com/bucketName/{keyName}");
 
             var useCase = new CreateOrUpdateThumbnailUseCase(repo.Object, imgService.Object, logger, validator);

@@ -32,7 +32,7 @@ namespace NewsApi.Application.UseCases.Thumbnail
             var keyName = $"{news.Id}{extension}";
 
             if (news.ThumbnailURL is null)
-                news.ThumbnailURL = await _imageService.Upload(keyName, request.FileLocalPath);
+                news.ThumbnailURL = await _imageService.Save(keyName, request.FileLocalPath);
             else
                 news.ThumbnailURL = await _imageService.Update(keyName, request.FileLocalPath);
 

@@ -11,7 +11,7 @@ using NewsApi.Application.UseCases.Thumbnail;
 namespace NewsApi.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("news")]
     public class ThumbnailController : ControllerBase
     {
         private readonly IHostEnvironment _environment;
@@ -19,10 +19,10 @@ namespace NewsApi.Api.Controllers
         public ThumbnailController(IHostEnvironment environment)
             => _environment = environment;
 
-        [HttpPost]
+        [HttpPost("{newsId}/thumbnail")]
         public async Task<IActionResult> Post(
             [FromServices] CreateOrUpdateThumbnailUseCase useCase,
-            [FromQuery] Guid newsId,
+            [FromRoute] Guid newsId,
             [FromForm] IFormFile file)
         {
 
