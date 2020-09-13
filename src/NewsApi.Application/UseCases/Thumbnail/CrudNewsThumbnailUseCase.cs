@@ -28,15 +28,17 @@ namespace NewsApi.Application.UseCases.Thumbnail
             if (news is null)
                 return _response.SetResourceNotFountError("0.10", $"News with id = {request.NewsId} not exists");
 
+            var extension = Path.GetExtension(request.FileName);
+            var keyName = $"{news.Id}{extension}";
             if (request.Type == ThumbnailRequestType.Create)
-                news.ThumbnailURL = await _imageService.Upload(request.FileName, request.FileLocalPath);
+                news.ThumbnailURL = await _imageService.Upload(keyName, request.FileLocalPath);
 
             if (request.Type == ThumbnailRequestType.Update)
-                news.ThumbnailURL = await _imageService.Update(request.FileName, request.FileLocalPath);
+                news.ThumbnailURL = await _imageService.Update(keyName, request.FileLocalPath);
 
             if (request.Type == ThumbnailRequestType.Delete)
             {
-                await _imageService.Delete(news.ThumbnailURL);
+                await _imageService.Delete(keyName);
                 news.ThumbnailURL = null;
             }
 

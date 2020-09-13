@@ -16,6 +16,9 @@ namespace NewsApi.Api.Controllers
     {
         private readonly IHostEnvironment _environment;
 
+        public ThumbnailController(IHostEnvironment environment)
+            => _environment = environment;
+
         [HttpGet]
         public async Task<IActionResult> Post(
             [FromServices] CrudNewsThumbnailUseCase useCase,
