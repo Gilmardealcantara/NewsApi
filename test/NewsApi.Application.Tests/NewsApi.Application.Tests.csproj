@@ -15,6 +15,10 @@
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
   </ItemGroup>
 
+  <Target Name="CopyAppSettionForTests" AfterTargets="AfterBuild">
+    <Copy SourceFiles="../staticFile/image.jpg" DestinationFolder="$(OutDir)" Condition="Exists('../staticFile/image.jpg')" />
+  </Target>
+
   <ItemGroup>
     <ProjectReference Include="..\..\src\NewsApi.Application\NewsApi.Application.csproj" />
   </ItemGroup>
