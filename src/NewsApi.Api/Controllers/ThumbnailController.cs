@@ -41,6 +41,8 @@ namespace NewsApi.Api.Controllers
 
             var result = await useCase.Execute(request);
 
+            System.IO.File.Delete(request.FileLocalPath);
+
             return UseCaseResponseToActionResult.Converter(result);
         }
     }
