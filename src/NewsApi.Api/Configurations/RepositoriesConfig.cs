@@ -2,6 +2,8 @@ using System.Data;
 using System.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using NewsApi.Application.Services.Repositories;
+using NewsApi.Application.Shared;
+using NewsApi.Services.Factories;
 using NewsApi.Services.Repositories;
 
 namespace NewsApi.Api.Configurations
@@ -10,7 +12,8 @@ namespace NewsApi.Api.Configurations
     {
         public static void ConfigureRepository(this IServiceCollection services, ApplicationConfig config)
         {
-            services.AddTransient<IDbConnection>((sp) => new SqlConnection(config.Database.ConnectionString));
+
+            services.AddScoped<IConnectionFactory, SqlServerConnectionFactory>();
             services.AddScoped<INewsRepository, NewsRepository>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
         }

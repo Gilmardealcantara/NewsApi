@@ -4,12 +4,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using NewsApi.Application.Shared;
 
 namespace NewsApi.Api.IntegrationTests
 {
     public static class TokenFactory
     {
-        public static string GetToken(NewsApi.Api.Configurations.Authorization auth)
+        public static string GetToken(Authorization auth)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.Default.GetBytes(auth.SecretKey));
 

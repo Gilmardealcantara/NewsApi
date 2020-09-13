@@ -12,14 +12,15 @@ namespace NewsApi.Services.Repositories
 
     public partial class NewsRepository : INewsRepository
     {
-        private readonly IDbConnection _dbConnection;
+        private readonly IConnectionFactory _connectionFactory;
 
-        public NewsRepository(IDbConnection dbConnection)
-            => _dbConnection = dbConnection;
+
+        public NewsRepository(IConnectionFactory connectionFactory)
+            => _connectionFactory = connectionFactory;
 
         public async Task Delete(Guid newsId)
         {
-            await _dbConnection.ExecuteAsync(@"delete from News where id = @id", new { id = newsId });
+            await _connectionFactory.GetConnection().ExecuteAsync(@"delete from News where id = @id", new { id = newsId });
         }
 
         public async Task<IEnumerable<News>> GetAll()
@@ -35,7 +36,7 @@ namespace NewsApi.Services.Repositories
             FROM [News] n 
             JOIN Authors a ON n.AuthorId = a.AuthorId;";
 
-            return (await _dbConnection.QueryAsync(sql))
+            return (await _connectionFactory.GetConnection().QueryAsync(sql))
                 .Select(f => new News(
                     (Guid)f.Id, f.Title, f.Content,
                     new Author((Guid)f.Author_Id, (string)f.Author_UserName, (string)f.Author_Name))
@@ -59,7 +60,7 @@ namespace NewsApi.Services.Repositories
             JOIN Authors a ON n.AuthorId = a.AuthorId
             WHERE n.NewsId=@id";
 
-            var newsQueryResult = await _dbConnection.QueryFirstOrDefaultAsync(newsQuery, new { id = id });
+            var newsQueryResult = await _connectionFactory.GetConnection().QueryFirstOrDefaultAsync(newsQuery, new { id = id });
             var news = newsQueryResult is null ? null : new News(
                 (Guid)newsQueryResult.Id,
                 newsQueryResult.Title,
@@ -84,7 +85,7 @@ namespace NewsApi.Services.Repositories
             JOIN Authors a ON c.AuthorId = a.AuthorId
             Where NewsId = @id";
 
-            return (await _dbConnection.QueryAsync(sql, new { id, limit }))
+            return (await _connectionFactory.GetConnection().QueryAsync(sql, new { id, limit }))
                 .Select(f => new Comment(f.Text, new Author((Guid)f.Author_Id, f.Author_UserName, f.Author_Name)));
         }
 
@@ -95,7 +96,7 @@ namespace NewsApi.Services.Repositories
             var command = $"INSERT INTO News {keys} values {values}";
 
             var parameters = new { news.Title, news.Content, NewsId = news.Id, AuthorId = news.Author.Id };
-            await _dbConnection.ExecuteAsync(command, parameters);
+            await _connectionFactory.GetConnection().ExecuteAsync(command, parameters);
         }
 
         public async Task Update(News news)
@@ -107,7 +108,7 @@ namespace NewsApi.Services.Repositories
                 WHERE NewsId = @NewsId";
 
             var parameters = new { news.Title, news.Content, NewsId = news.Id, AuthorId = news.Author.Id };
-            await _dbConnection.ExecuteAsync(command, parameters);
+            await _connectionFactory.GetConnection().ExecuteAsync(command, parameters);
         }
     }
 }
