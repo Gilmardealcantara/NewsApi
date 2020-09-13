@@ -21,7 +21,8 @@ namespace NewsApi.Api
             services.ConfigureSwagger();
             services.ConfigureValidator();
             services.ConfigureUseCase();
-            services.ConfigureRepository(appConfig);
+            services.ConfigureRepository();
+            services.ConfigureExternalServices();
             services.ConfigureAuthorization(appConfig);
 
             services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);

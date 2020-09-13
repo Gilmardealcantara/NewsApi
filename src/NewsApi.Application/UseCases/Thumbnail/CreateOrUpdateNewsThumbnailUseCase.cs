@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using NewsApi.Application.Dtos;
-using NewsApi.Application.Services.ExternalApis;
+using NewsApi.Application.Services.External;
 using NewsApi.Application.Services.Repositories;
 using NewsApi.Application.Shared;
 using NewsApi.Application.UseCases.Interfaces.Thumbnail;

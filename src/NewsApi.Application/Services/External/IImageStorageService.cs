@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace NewsApi.Application.Services.ExternalApis
+namespace NewsApi.Application.Services.External
 {
     public interface IImageStorageService
     {

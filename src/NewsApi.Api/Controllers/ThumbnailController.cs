@@ -19,7 +19,7 @@ namespace NewsApi.Api.Controllers
         public ThumbnailController(IHostEnvironment environment)
             => _environment = environment;
 
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Post(
             [FromServices] CreateOrUpdateThumbnailUseCase useCase,
             [FromQuery] Guid newsId,
