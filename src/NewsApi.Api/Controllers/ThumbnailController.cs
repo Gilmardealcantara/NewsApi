@@ -21,7 +21,7 @@ namespace NewsApi.Api.Controllers
 
         [HttpGet]
         public async Task<IActionResult> Post(
-            [FromServices] CrudNewsThumbnailUseCase useCase,
+            [FromServices] CreateOrUpdateThumbnailUseCase useCase,
             [FromQuery] Guid newsId,
             [FromForm] IFormFile file)
         {
@@ -33,7 +33,6 @@ namespace NewsApi.Api.Controllers
             var request = new ThumbnailRequest
             {
                 NewsId = newsId,
-                Type = ThumbnailRequestType.Create,
                 FileLength = file.Length,
                 FileLocalPath = fileLocalPath,
                 FileName = file.FileName,

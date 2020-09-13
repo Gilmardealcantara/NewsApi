@@ -14,7 +14,6 @@ namespace NewsApi.Application.Dtos
         [JsonIgnore]
         public Guid NewsId { get; set; }
         [JsonIgnore]
-        public ThumbnailRequestType Type { get; set; }
         public long FileLength { get; set; }
         public string FileLocalPath { get; set; }
         public string FileName { get; set; }

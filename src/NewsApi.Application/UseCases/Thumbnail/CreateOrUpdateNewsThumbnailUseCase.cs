@@ -10,14 +10,14 @@ using NewsApi.Application.UseCases.Interfaces.Thumbnail;
 
 namespace NewsApi.Application.UseCases.Thumbnail
 {
-    public class CrudNewsThumbnailUseCase : UseCaseBase<ThumbnailRequest, string>, ICrudNewsThumbnailUseCase
+    public class CreateOrUpdateThumbnailUseCase : UseCaseBase<ThumbnailRequest, string>, ICreateOrUpdateThumbnailUseCase
     {
         private readonly INewsRepository _repository;
         private readonly IImageStorageService _imageService;
-        public CrudNewsThumbnailUseCase(
+        public CreateOrUpdateThumbnailUseCase(
             INewsRepository repository,
             IImageStorageService imageService,
-            ILogger<CrudNewsThumbnailUseCase> logger,
+            ILogger<CreateOrUpdateThumbnailUseCase> logger,
             IValidator<ThumbnailRequest> validator)
             : base(logger, validator, ("07", "Error unexpected when add thumbnail in news"))
             => (_repository, _imageService) = (repository, imageService);
@@ -30,17 +30,11 @@ namespace NewsApi.Application.UseCases.Thumbnail
 
             var extension = Path.GetExtension(request.FileName);
             var keyName = $"{news.Id}{extension}";
-            if (request.Type == ThumbnailRequestType.Create)
+
+            if (news.ThumbnailURL is null)
                 news.ThumbnailURL = await _imageService.Upload(keyName, request.FileLocalPath);
-
-            if (request.Type == ThumbnailRequestType.Update)
+            else
                 news.ThumbnailURL = await _imageService.Update(keyName, request.FileLocalPath);
-
-            if (request.Type == ThumbnailRequestType.Delete)
-            {
-                await _imageService.Delete(keyName);
-                news.ThumbnailURL = null;
-            }
 
             await _repository.Update(news);
 
