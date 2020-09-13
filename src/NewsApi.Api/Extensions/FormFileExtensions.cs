@@ -7,7 +7,7 @@ namespace NewsApi.Api.Extensions
 {
     public static class FormFileExtensions
     {
-        public static async Task<string> GetLocalPath(this IFormFile file, IHostEnvironment env)
+        public static async Task<string> GetLocalPath(IFormFile file, IHostEnvironment env)
         {
             if (file is null || file.Length <= 0)
                 return null;

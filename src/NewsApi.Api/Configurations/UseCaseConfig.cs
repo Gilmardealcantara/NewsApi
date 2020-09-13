@@ -1,6 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using NewsApi.Application.UseCases.Interfaces.News;
+using NewsApi.Application.UseCases.Interfaces.Thumbnail;
 using NewsApi.Application.UseCases.News;
+using NewsApi.Application.UseCases.Thumbnail;
 
 namespace NewsApi.Api.Configurations
 {
@@ -12,6 +14,7 @@ namespace NewsApi.Api.Configurations
             services.AddTransient<IGetNewsByIdUseCase, GetNewsByIdUseCase>();
             services.AddTransient<ICreateNewsUseCase, CreateNewsUseCase>();
             services.AddTransient<IUpdateNewsUseCase, UpdateNewsUseCase>();
+            services.AddTransient<ICreateOrUpdateThumbnailUseCase, CreateOrUpdateThumbnailUseCase>();
         }
     }
 }

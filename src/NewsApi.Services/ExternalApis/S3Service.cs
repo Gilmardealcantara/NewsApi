@@ -15,11 +15,12 @@ namespace NewsApi.Services.ExternalApis
         private static IAmazonS3 _s3Client;
         private readonly ApplicationConfig _config;
 
-        ILogger<S3Service> _logger;
+        private readonly ILogger<S3Service> _logger;
 
-        public S3Service(ApplicationConfig config)
+        public S3Service(ApplicationConfig config, ILogger<S3Service> logger)
         {
             _config = config;
+            _logger = logger;
             // var region = RegionEndpoint.GetBySystemName(_config.S3.AwsRegionEndpoint);
             // _s3Client = new AmazonS3Client(_config.S3.AwsAccessKeyId, _config.S3.AwsSecretAccessKey, region);
             AmazonS3Config s3Config = new AmazonS3Config
@@ -36,7 +37,8 @@ namespace NewsApi.Services.ExternalApis
 
         public string GetFullUrl(string fileName)
         {
-            return $"https://{_config.S3.AwsBucketName}.s3.amazonaws.com/{fileName}";
+            return $"{_config.S3.AwsEndpointUrl}/{_config.S3.AwsBucketName}/{fileName}";
+            // return $"https://{_config.S3.AwsBucketName}.s3.amazonaws.com/{fileName}";
         }
 
 

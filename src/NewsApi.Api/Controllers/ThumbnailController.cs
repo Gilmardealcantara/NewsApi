@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
-using NewsApi.Application.Dtos;
 using NewsApi.Api.Extensions;
+using NewsApi.Application.Dtos;
 using NewsApi.Application.Shared;
-using NewsApi.Application.UseCases.Thumbnail;
+using NewsApi.Application.UseCases.Interfaces.Thumbnail;
 
 namespace NewsApi.Api.Controllers
 {
@@ -19,14 +19,15 @@ namespace NewsApi.Api.Controllers
         public ThumbnailController(IHostEnvironment environment)
             => _environment = environment;
 
+
         [HttpPost("{newsId}/thumbnail")]
         public async Task<IActionResult> Post(
-            [FromServices] CreateOrUpdateThumbnailUseCase useCase,
+            [FromServices] ICreateOrUpdateThumbnailUseCase useCase,
             [FromRoute] Guid newsId,
             [FromForm] IFormFile file)
         {
 
-            var fileLocalPath = await file?.GetLocalPath(_environment);
+            var fileLocalPath = await FormFileExtensions.GetLocalPath(file, _environment);
             if (fileLocalPath is null)
                 return BadRequest(new[] { new ErrorMessage("09.93", "Invalid file, Expected multipart/form-data Content-Type") });
 
