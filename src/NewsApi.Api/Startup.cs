@@ -50,8 +50,6 @@ namespace NewsApi.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            // app.UseSerilogRequestLogging();
-
             app.UseHttpsRedirection();
 
             app.UseRouting();
