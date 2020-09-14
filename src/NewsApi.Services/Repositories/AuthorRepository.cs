@@ -11,10 +11,10 @@ namespace NewsApi.Services.Repositories
     public class AuthorRepository : IAuthorRepository
     {
 
-        private readonly IDbConnection _dbConnection;
+        private readonly IConnectionFactory _connectionFactory;
 
-        public AuthorRepository(IDbConnection dbConnection)
-            => _dbConnection = dbConnection;
+        public AuthorRepository(IConnectionFactory connectionFactory)
+            => _connectionFactory = connectionFactory;
 
         public async Task<Author> GeyByUserName(string userName)
         {
@@ -25,7 +25,7 @@ namespace NewsApi.Services.Repositories
             FROM [news-dev].[dbo].[Authors]
             WHERE UserName = @userName";
 
-            var result = await _dbConnection.QueryFirstOrDefaultAsync(query, new { userName });
+            var result = await _connectionFactory.GetConnection().QueryFirstOrDefaultAsync(query, new { userName });
             return result is null ? null : new Author((Guid)result.Id, result.UserName, result.Name);
         }
 
@@ -34,7 +34,7 @@ namespace NewsApi.Services.Repositories
             var keys = "(AuthorId, UserName, [Name])";
             var values = "(@Id, @UserName, @Name)";
             var comand = $"INSERT INTO Authors {keys} VALUES {values}";
-            await _dbConnection.ExecuteAsync(comand, author);
+            await _connectionFactory.GetConnection().ExecuteAsync(comand, author);
         }
     }
 }

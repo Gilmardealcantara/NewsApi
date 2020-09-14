@@ -16,7 +16,7 @@ namespace NewsApi.Application.Tests.UseCases
         public async Task UseCaseBase_WhenRequestIsInvalid_ReturnValidateError()
         {
             var logger = new Mock<ILogger<SpecificUseCase>>().Object;
-            var validator = ValidatorsFactory.GetInValidValidator<int>("mockCode");
+            var validator = ValidatorFactory.GetInValidValidator<int>("mockCode");
 
             var useCase = new SpecificUseCase(logger, validator);
             var response = await useCase.Execute(5);
@@ -33,7 +33,7 @@ namespace NewsApi.Application.Tests.UseCases
         {
             //Given
             var logger = new Mock<ILogger<SpecificUseCase>>().Object;
-            var validator = ValidatorsFactory.GetValidValidator<int>();
+            var validator = ValidatorFactory.GetValidValidator<int>();
 
             //When
             var useCase = new SpecificUseCase(logger, validator);

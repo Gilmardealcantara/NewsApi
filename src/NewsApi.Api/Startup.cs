@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NewsApi.Api.Configurations;
+using Serilog;
 
 namespace NewsApi.Api
 {
@@ -12,7 +13,13 @@ namespace NewsApi.Api
     {
         private readonly IConfiguration _configuration;
         public Startup(IConfiguration configuration)
-            => _configuration = configuration;
+        {
+            _configuration = configuration;
+
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
+        }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -21,7 +28,8 @@ namespace NewsApi.Api
             services.ConfigureSwagger();
             services.ConfigureValidator();
             services.ConfigureUseCase();
-            services.ConfigureRepository(appConfig);
+            services.ConfigureRepository();
+            services.ConfigureExternalServices();
             services.ConfigureAuthorization(appConfig);
 
             services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);

@@ -1,18 +1,50 @@
 # News API
 
+## Run 
+```
+dotnet run -p src/NewsApi.Api/
+```
 
+## Setup Local Dev
+``` sh
+cd setupDevDB
 docker-compose down -v --rmi all --remove-orphans
-docker-compose up --build --abort-on-container-exit
+docker-compose build # once time
+docker-compose up -d
+# After 30s is done !!! 
+# Db Info: 
+# Data source: localhost,1435;
+# User ID: sa
+# Password: Senha@123
+```
 
+# Tests
+## Run Unit Tests
+``` sh
+dotnet test test/NewsApi.Application.Tests/
+```
+ 
+
+## Run Integration Tests
+``` sh
+dotnet test test/NewsApi.Application.Tests/
+```
+
+## tests with detail
+``` sh
 dotnet test --logger "console;verbosity=detailed"
+```
 
+## generate coverage
+``` sh
+# unit application tests
 cd test/NewsApi.Application.Tests/
 generate-coverate.sh 
 
+# api integration tests
 cd test/NewsApi.Api.IntegrationTests/
 generate-coverate.sh 
-
-code coverate
+```
 
 
 
@@ -44,3 +76,11 @@ code coverate
     - Deletar notícia
     - Curtir notícias
     - Adicionar/Editar/Remover comentários 
+
+
+TODO
+paginate news list
+Remove HTML from content preview
+Delete thumb use case
+Notification Service
+

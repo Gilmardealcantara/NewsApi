@@ -26,7 +26,7 @@ namespace NewsApi.Application.UseCases.News
         {
             var oldNews = await _repository.GetById(request.Id);
             if (oldNews is null)
-                return _response.SetResourceNotFountError();
+                return _response.SetResourceNotFountError("0.10", $"News with id = {request.Id} not exists");
 
             Author author = oldNews.Author;
 

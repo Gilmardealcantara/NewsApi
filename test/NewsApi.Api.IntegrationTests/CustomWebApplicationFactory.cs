@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
-using NewsApi.Api.Configurations;
+using NewsApi.Application.Shared;
 
 namespace NewsApi.Api.IntegrationTests
 {

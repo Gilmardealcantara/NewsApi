@@ -7,6 +7,5 @@ namespace NewsApi.Application.Services.Repositories
     {
         Task Save(Author author);
         Task<Author> GeyByUserName(string userName);
-
     }
 }

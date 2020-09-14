@@ -13,6 +13,8 @@ namespace NewsApi.Api.Configurations
             services.AddTransient<IValidator<Guid>, GuidValidator>();
             services.AddTransient<IValidator<CreateNewsRequest>, CreateNewsRequestValidator>();
             services.AddTransient<IValidator<UpdateNewsRequest>, UpdateNewsRequestValidator>();
+            services.AddTransient<IValidator<ThumbnailRequest>, ThumbnailRequestValidation>();
+
         }
     }
 }
